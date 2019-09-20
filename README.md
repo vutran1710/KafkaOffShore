@@ -13,3 +13,10 @@ ratings     an integer number of the ratings
 comments	an integer number of the comments
 related IDs	up to 20 strings of the related video IDs
 ```
+
+## TODO
+
+Considering what to add to sweeten the pot and make shit easier to understand!
+
+- [ ] Add PouchDB
+- [ ] Add ClientApp with PouchDB for db real-time tracking

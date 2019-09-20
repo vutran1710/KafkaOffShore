@@ -9,6 +9,7 @@ verify_ssl = true
 kafka-python = "*"
 python-dotenv = "*"
 logzero = "*"
+cloudant = "*"
 
 [requires]
 python_version = "3.7.1"
