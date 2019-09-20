@@ -39,3 +39,32 @@ services:
       - 9000:9000
     networks:
       - bridge
+
+  kafka-producer:
+    image: kafka-flink-producer
+    build:
+      dockerfile: Dockerfile.producer
+      context: .
+    depends_on:
+      - kafka
+    environment:
+      KAFKA_SERVER: "kafka:9092"
+      ZOOKEEPER_SERVER: "zookeeper:32181"
+      KAFKA_TOPIC: "flight"
+      PRODUCER_INTERVAL: 10
+    networks:
+      - bridge
+
+  kafka-consumer:
+    image: kafka-flink-consumer
+    build:
+      dockerfile: Dockerfile.consumer
+      context: .
+    depends_on:
+      - kafka-producer
+    environment:
+      KAFKA_SERVER: "kafka:9092"
+      ZOOKEEPER_SERVER: "zookeeper:32181"
+      KAFKA_TOPIC: "flight"
+    networks:
+      - bridge
