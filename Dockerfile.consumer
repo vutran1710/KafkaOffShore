@@ -1,0 +1,5 @@
+FROM pipenv:latest
+WORKDIR /
+COPY ./consumer.py .
+RUN pipenv install
+CMD pipenv run python consumer.py

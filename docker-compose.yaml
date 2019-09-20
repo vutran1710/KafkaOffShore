@@ -1,16 +1,41 @@
-version: '3'
+version: '3.6'
+
+networks:
+  bridge:
+    driver: bridge
+
 services:
   zookeeper:
-    image: wurstmeister/zookeeper
-    ports:
-      - "2181:2181"
-  kafka:
-    image: wurstmeister/kafka
-    ports:
-      - "9092"
+    image: confluentinc/cp-zookeeper:latest
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: 192.168.1.182
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_CREATE_TOPICS: "test-topic:5:2"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      ZOOKEEPER_CLIENT_PORT: 32181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      bridge:
+        aliases:
+          - zookeeper
+
+  kafka:
+    image: wurstmeister/kafka:latest
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ADVERTISED_HOST_NAME: 0.0.0.0
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:32181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      JMX_PORT: 9999
+    networks:
+      bridge:
+        aliases:
+          - kafka
+
+  kafka-manager:
+    image: sheepkiller/kafka-manager:latest
+    environment:
+      ZK_HOSTS: "zookeeper:32181"
+    ports:
+      - 9000:9000
+    networks:
+      - bridge

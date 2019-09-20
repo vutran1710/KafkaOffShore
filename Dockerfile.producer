@@ -1,0 +1,5 @@
+FROM pipenv:latest
+WORKDIR /
+COPY ./producer.py .
+RUN pipenv install
+CMD pipenv run python producer.py
