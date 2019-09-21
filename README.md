@@ -18,5 +18,14 @@ related IDs	up to 20 strings of the related video IDs
 
 Considering what to add to sweeten the pot and make shit easier to understand!
 
-- [ ] Add PouchDB
-- [ ] Add ClientApp with PouchDB for db real-time tracking
+- [x] Add CouchDB
+- [ ] Add Flink to consumer
+- [ ] Add Producer API Endpoints
+- [ ] Add API Client
+- [ ] Add Admin Client with PouchDB for db real-time tracking
+- [ ] Scale Consumer & DB Replicate
+- [ ] Add more topics and addtional Producers
+- [ ] Scale Broker
+- [ ] Crash some services for testing
+- [ ] Apache Beam?
+- [ ] KSQL?
