@@ -5,7 +5,17 @@ networks:
     driver: bridge
 
 services:
+  couchdb:
+    image: couchdb:latest
+    environment:
+      COUCHDB_USER: "admin"
+      COUCHDB_PASSWORD: "1234abc"
+    networks:
+      - bridge
+
   zookeeper:
+    depends_on:
+      - couchdb
     image: confluentinc/cp-zookeeper:latest
     environment:
       ZOOKEEPER_CLIENT_PORT: 32181
@@ -61,23 +71,11 @@ services:
       dockerfile: Dockerfile.consumer
       context: .
     depends_on:
-      - couchdb
+      - kafka-producer
     environment:
       KAFKA_SERVER: "kafka:9092"
       ZOOKEEPER_SERVER: "zookeeper:32181"
       KAFKA_TOPIC: "flight"
       COUCHDB_SERVER: "couchdb:5984"
-    networks:
-      - bridge
-
-  couchdb:
-    image: couchdb:latest
-    depends_on:
-      - kafka-producer
-    environment:
-      COUCHDB_USER: "admin"
-      COUCHDB_PASSWORD: "1234abc"
-    ports:
-      - 5984:5984
     networks:
       - bridge

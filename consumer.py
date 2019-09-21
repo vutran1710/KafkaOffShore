@@ -8,18 +8,9 @@ KAFKA_SERVER = getenv('KAFKA_SERVER')
 KAFKA_TOPIC = getenv('KAFKA_TOPIC')
 
 couchdb_server = getenv('COUCHDB_SERVER')
-DBCLIENT = CouchDB('admin', '1234abc', url=couchdb_server, connect=True)
-
-# Open DB or Create new one
-db = None
-
-def open_db():
-    global db
-
-    if not db:
-        db = DBCLIENT['flightdb'] or client.create_database('flightdb')
-
-    return db
+client = CouchDB('admin', '1234abc', url='http://{}'.format(couchdb_server), connect=True)
+db_name = 'flightdb'
+db = client.get(db_name, None) or client.create_database(db_name)
 
 # continuous loop
 var = 1
@@ -45,6 +36,5 @@ while var == 1:
             "timestamp": int(datetime.now().strftime('%s')),
         }
 
-        mydb = open_db()
-        record = mydb.create_document(new_document)
-        logs.info('New doc: %id', record['_id'])
+        record = db.create_document(new_document)
+        logs.info('New doc: %s, ---- at timestamp: %s', record['_id'], record['timestamp'])
