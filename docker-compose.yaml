@@ -53,8 +53,8 @@ services:
   kafka-producer:
     image: kafka-flink-producer
     build:
-      dockerfile: Dockerfile.producer
-      context: .
+      dockerfile: Dockerfile
+      context: ./producer
     depends_on:
       - kafka
     environment:
@@ -68,8 +68,8 @@ services:
   kafka-consumer:
     image: kafka-flink-consumer
     build:
-      dockerfile: Dockerfile.consumer
-      context: .
+      dockerfile: Dockerfile
+      context: ./consumer
     depends_on:
       - kafka-producer
     environment:
