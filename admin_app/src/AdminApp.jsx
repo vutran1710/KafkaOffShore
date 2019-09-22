@@ -20,7 +20,7 @@ export default class AdminApp extends React.Component {
   render() {
     return (
       <div>
-        Hello Dear Users!
+        Hello Admin!
         <hr />
         {this.state.loading && <div>Sending....</div>}
         <button disabled={this.state.loading} onClick={this.requestSendIntegerStream}>

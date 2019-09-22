@@ -13,7 +13,7 @@ export default class UserApp extends React.Component {
 
   async requestSendIntegerStream() {
     this.setState({ loading: true })
-    await wretch('http://localhost:8080').put()
+    await wretch('http://localhost:8080/api/stream_int').put()
     this.setState({ loading: false })
   }
 
