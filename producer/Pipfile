@@ -11,6 +11,10 @@ python-dotenv = "*"
 logzero = "*"
 cloudant = "*"
 aiohttp = "*"
+aiohttp-devtools = "*"
 
 [requires]
 python_version = "3.7.1"
+
+[scripts]
+dev = "adev runserver ."
