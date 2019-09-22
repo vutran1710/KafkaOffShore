@@ -62,6 +62,8 @@ services:
       ZOOKEEPER_SERVER: "zookeeper:32181"
       KAFKA_TOPIC: "flight"
       PRODUCER_INTERVAL: 10
+    ports:
+      - 8080:8080
     networks:
       - bridge
 
