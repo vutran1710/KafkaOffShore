@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "module": "commonjs",
+    "target": "esnext",
+    "sourceMap": true,
+    "jsx": "react",
+    "importHelpers": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
+  },
+  "exclude": ["node_modules", "fuse.ts"]
+}
