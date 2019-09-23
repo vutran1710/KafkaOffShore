@@ -1,5 +1,4 @@
 import React from 'react'
-import wretch from 'wretch'
 import PouchDB from 'pouchdb'
 import './style.scss'
 
@@ -13,19 +12,17 @@ export default class AdminApp extends React.Component {
 
   async componentDidMount() {
     const remotedb = new PouchDB('http://localhost:5984/flightdb')
-    const localdb = new PouchDB('localdb')
-    PouchDB.replicate(remotedb, localdb, { live: true }).on('change', info => {
-      const newDoc = info.docs[0]
-      this.setState({
-        docs: [
-          ...this.state.docs,
-          newDoc,
-        ]
-      })
+    const docs = await remotedb.allDocs({ include_docs: true }).then(resp => resp.rows.map(r => r.doc))
+    this.setState({ db: remotedb, docs })
+    remotedb.changes({
+      since: 'now',
+      live: true,
+      include_docs: true,
+    }).on('change', change => {
+      console.log(change)
+      const newDoc = change.doc
+      this.setState({ docs: [...this.state.docs, newDoc] })
     })
-
-    const docs = await localdb.allDocs({ include_docs: true }).then(resp => resp.rows.map(r => r.doc))
-    this.setState({ db: localdb, docs })
   }
 
   render() {

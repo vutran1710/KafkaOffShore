@@ -12,6 +12,8 @@ services:
       COUCHDB_PASSWORD: "1234abc"
     ports:
       - 5984:5984
+    volumes:
+      - ./.couchdb/data:/opt/couchdb/data
     networks:
       - bridge
 
@@ -32,9 +34,14 @@ services:
     depends_on:
       - zookeeper
     environment:
-      KAFKA_BROKER_ID: 1
       KAFKA_ADVERTISED_HOST_NAME: 0.0.0.0
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:32181
+      # HOSTNAME_COMMAND: "docker info | grep ^Name: | cut -d' ' -f 2"
+      # KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
+      # KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
+      # KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      # KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+      # KAFKA_CREATE_TOPICS: "flight:3:3"
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       JMX_PORT: 9999

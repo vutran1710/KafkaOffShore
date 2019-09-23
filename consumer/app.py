@@ -26,6 +26,8 @@ while var == 1:
         # NOTE: in case of downtime, how to recover the missing data?
         # Verify block height?
         # then do what?
+        logs.info("%s:%d:%d: key=%s value=%s" % (msg.topic, msg.partition, msg.offset, msg.key, msg.value))
+
         count += 1
         total = total + count
         logs.info('Received: %s, nth = %s', msg, count)

@@ -13,3 +13,6 @@ cloudant = "*"
 
 [requires]
 python_version = "3.7.1"
+
+[scripts]
+dev = "python app.py"

@@ -28,11 +28,20 @@ async def send_integer_stream(request):
     """
     Send continuous random integers (0-10) 10 times, for testing purpose only
     """
+    def on_send_success(record_metadata):
+        logs.error(record_metadata.topic)
+        logs.error(record_metadata.partition)
+        logs.error(record_metadata.offset)
+
+    def on_send_error(excp):
+        logs.error('I am an errback', exc_info=excp)
+        # handle exception
+
     count = 0
     while count < 11:
         num = random.randint(0, 10)
         num_bytes = bytes(str(num), encoding='utf-8')
-        producer.send(kafka_topic, value=num_bytes, key=num_bytes)
+        producer.send(kafka_topic, value=num_bytes, key=num_bytes).add_callback(on_send_success).add_errback(on_send_error)
         count += 1
         logs.info('====== Count %s', count)
         time.sleep(1)

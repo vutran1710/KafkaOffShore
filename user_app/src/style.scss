@@ -1,5 +1,5 @@
 body {
-  background: #eee;
+  background: #f9fbff;
 }
 
 button {
@@ -7,4 +7,9 @@ button {
   padding: 5px 15px;
   font-size: 16px;
   border-radius: 5px;
+}
+
+button:disabled {
+  color: #ddd;
+  background: #eee;
 }

@@ -11,6 +11,12 @@ setup:
 	echo "===== Getting dockerization"
 	docker-compose up -d --build
 
+up-build:
+	docker-compose up -d --force-recreate --build
+
+up:
+	docker-compose up -d
+
 fe_user:
 	echo "Running User Application to interact with Producer Backend API"
 	cd user_app && npm start

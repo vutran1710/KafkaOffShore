@@ -69,3 +69,5 @@ Considering what to add to sweeten the pot and make shit easier to understand!
 - [ ] Crash some services for testing
 - [ ] Apache Beam?
 - [ ] KSQL?
+- [ ] Deploy everything with **Kubernetes**
+- [ ] Stress-testing
