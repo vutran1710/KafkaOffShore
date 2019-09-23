@@ -1,0 +1,30 @@
+body {
+  background: #ddd;
+}
+
+button {
+  font-size: 16px;
+  padding: 5px 15px;
+  background: #999;
+  color: #eee;
+  border-radius: 5px;
+}
+
+.row {
+  padding: 10px;
+  display: inline-block;
+  color: #333;
+  background: white;
+  margin: 10px;
+  border-radius: 5px;
+  width: 20vw;
+}
+
+.doc-container {
+  height: 70vh;
+  overflow: scroll;
+  background: #eee;
+  border: solid 2px groove;
+  border-radius: 10px;
+  padding: 10px;
+}

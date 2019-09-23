@@ -10,6 +10,8 @@ services:
     environment:
       COUCHDB_USER: "admin"
       COUCHDB_PASSWORD: "1234abc"
+    ports:
+      - 5984:5984
     networks:
       - bridge
 
@@ -62,6 +64,8 @@ services:
       ZOOKEEPER_SERVER: "zookeeper:32181"
       KAFKA_TOPIC: "flight"
       PRODUCER_INTERVAL: 10
+    ports:
+      - 8080:8080
     networks:
       - bridge
 
