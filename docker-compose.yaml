@@ -10,6 +10,8 @@ services:
     environment:
       COUCHDB_USER: "admin"
       COUCHDB_PASSWORD: "1234abc"
+    ports:
+      - 5984:5984
     networks:
       - bridge
 

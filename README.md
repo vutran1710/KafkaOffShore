@@ -1,3 +1,18 @@
+## SETUP
+
+Given our CouchDB (must be exposed to localhost) with default Authentication config being used
+``` text
+user: admin
+pwd: 1234abc
+```
+
+Add CORS to CouchDB so AdminApp can sync with it
+
+``` shell
+$ npx add-cors-to-couchdb http://localhost:5984 -u admin -p 1234abc
+```
+
+## DATA DESCRIPTION
 Using Youtube Dataset downloaded from http://netsg.cs.sfu.ca/youtubedata/
 **Data format**:
 
@@ -15,7 +30,6 @@ related IDs	up to 20 strings of the related video IDs
 ```
 
 ## TODO
-
 Considering what to add to sweeten the pot and make shit easier to understand!
 
 - [x] Add CouchDB

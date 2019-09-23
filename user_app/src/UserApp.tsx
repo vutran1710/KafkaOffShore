@@ -1,26 +1,23 @@
-import * as React from 'react'
+import React from 'react'
 import wretch from 'wretch'
+import './style.scss'
 
 
-export default class AdminApp extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      loading: false,
-    }
-    this.requestSendIntegerStream = this.requestSendIntegerStream.bind(this)
+export default class UserApp extends React.Component {
+  state = {
+    loading: false
   }
 
-  async requestSendIntegerStream() {
+  requestSendIntegerStream = async () => {
     this.setState({ loading: true })
-    await wretch('http://localhost:8080').put()
+    await wretch('http://localhost:8080/api/stream_int').put()
     this.setState({ loading: false })
   }
 
   render() {
     return (
       <div>
-        Hello Admin!
+        <h1>Hello Dear Users!</h1>
         <hr />
         {this.state.loading && <div>Sending....</div>}
         <button disabled={this.state.loading} onClick={this.requestSendIntegerStream}>

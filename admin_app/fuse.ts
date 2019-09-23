@@ -16,14 +16,22 @@ const frontendServe = () => {
     homeDir: '.',
     output: 'dist/$name',
     target: 'browser@esnext',
+    allowSyntheticDefaultImports: true,
     plugins: [
       WebIndexPlugin({
         template: 'src/index.html'
       }),
+      [
+        SassPlugin(),
+        CSSPlugin({
+          inject: file => `${file}`,
+          outFile: file => `dist/${file}`,
+        })
+      ],
     ],
   })
   fuse.dev({ hmr: true, port: 3002 })
-  const bundle = fuse.bundle('dist/bundle').watch('src/*.(ts|tsx)').hmr()
+  const bundle = fuse.bundle('dist/bundle').watch('src/*.(ts|tsx|scss)').hmr()
   bundle.instructions('> src/index.tsx')
   return fuse.run()
 }

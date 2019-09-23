@@ -7,9 +7,9 @@ from aiohttp import web
 import aiohttp_cors
 
 # Setup Kafka Producer
-# kafka_server = getenv('KAFKA_SERVER')
-# kafka_topic = getenv('KAFKA_TOPIC')
-# producer = KafkaProducer(bootstrap_servers=kafka_server)
+kafka_server = getenv('KAFKA_SERVER')
+kafka_topic = getenv('KAFKA_TOPIC')
+producer = KafkaProducer(bootstrap_servers=kafka_server)
 
 # Setup API Handler
 routes = web.RouteTableDef()
@@ -30,9 +30,9 @@ async def send_integer_stream(request):
     """
     count = 0
     while count < 11:
-        # num = random.randint(0, 10)
-        # num_bytes = bytes(str(num), encoding='utf-8')
-        # producer.send(kafka_topic, value=num_bytes, key=num_bytes)
+        num = random.randint(0, 10)
+        num_bytes = bytes(str(num), encoding='utf-8')
+        producer.send(kafka_topic, value=num_bytes, key=num_bytes)
         count += 1
         logs.info('====== Count %s', count)
         time.sleep(1)
