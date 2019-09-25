@@ -36,8 +36,7 @@ export default class AdminApp extends React.Component {
             {this.state.docs.map(r => (
               <li key={r._id} className="row">
                 <div>ID: {r._id}</div>
-                <div>Count: {r.count}</div>
-                <div>Total: {r.total}</div>
+                <div>Value: {r.value}</div>
                 ====================
               </li>
             ))}
