@@ -38,6 +38,13 @@ Developing *Producer Backend* with `aiohttp_devtool` dev-server using command
 $ make producer_dev
 ```
 
+## SPECIALS
+Run docker with scaled service (3 consumers, 3 kafka brokers)
+
+``` powershell
+$ make up-scale
+```
+
 ## DATA DESCRIPTION
 Using Youtube Dataset downloaded from http://netsg.cs.sfu.ca/youtubedata/
 **Data format**:
