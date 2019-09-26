@@ -1,30 +1,131 @@
 body {
-  background: #ddd;
+  background: #e9f0f2;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 button {
-  font-size: 16px;
+  font-size: 14px;
   padding: 5px 15px;
   background: #999;
   color: #eee;
   border-radius: 5px;
 }
 
+small {
+  color: #ccc;
+}
+
 .row {
+  font-size: 16px;
   padding: 10px;
   display: inline-block;
-  color: #333;
+  color: white;
   background: white;
   margin: 10px;
-  border-radius: 5px;
-  width: 20vw;
+  border-radius: 7px;
+  width: 10vw;
+  overflow: hidden;
+  box-shadow: 10px 10px 14px -5px rgba(0,0,0,0.24);
+  animation: fadeIn ease 200ms;
+  text-align: left;
+
+  hr {
+    margin: 10px -10px;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+.doc-id {
+  margin: -10px;
+  padding: 7px;
+  background: #ddd;
+  color: #888;
+  font-size: 11px;
+  word-wrap: break-word;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.page-title {
+  font-weight: 900;
+  font-size: 22px;
+}
+
+.legends {
+  width: 40vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.legends-item {
+  display: flex;
+  width: 30%;
+}
+
+.legends-color {
+  width: 15px;
+  height: 15px;
+  margin-right: 10px;
+}
+
+.legends-text {
+  font-size: 13px;
+  margin: 0;
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.row--red {
+  background: rgb(252,18,79);
+  background: linear-gradient(228deg, rgba(252,18,79,1) 0%, rgba(255,101,201,1) 100%);
+}
+
+.row--yellow {
+  background: rgb(255,113,0);
+  background: linear-gradient(228deg, rgba(255,113,0,1) 0%, rgba(235,195,0,1) 100%);
+}
+
+.row--green {
+  background: rgb(2,212,116);
+  background: linear-gradient(228deg, rgba(2,190,100,1) 0%, rgba(140,233,145,1) 100%);
 }
 
 .doc-container {
-  height: 80vh;
+  height: 78vh;
   overflow: scroll;
-  background: #eee;
-  border: solid 2px groove;
-  border-radius: 10px;
-  padding: 10px;
+  padding: 0px;
+  width: 100vw;
+  margin: 0px;
+  text-align: center;
+}
+
+.divider {
+  border-color: darkgreen;
+  margin: 10px 20vw;
+}
+
+.footer {
+  margin-top: 20px;
+  margin-right: 20px;
+  text-align: right;
 }

@@ -4,10 +4,11 @@ from os import getenv
 from kafka import KafkaConsumer
 from cloudant.client import CouchDB
 
-# KAFKA_SERVER = getenv('KAFKA_SERVER')
-KAFKA_SERVER = ['rabbit_kafka_{id}:9092'.format(id=id) for id in [1, 2, 3]]
+HOSTNAME = getenv('HOSTNAME')
+KAFKA_SERVER = getenv('KAFKA_SERVER')
 KAFKA_TOPIC = getenv('KAFKA_TOPIC')
 
+logs.info('Hostname: %s', str(HOSTNAME))
 logs.info('=====> Kafka Servers: %s', str(KAFKA_SERVER))
 
 couchdb_server = getenv('COUCHDB_SERVER')
@@ -29,6 +30,7 @@ while True:
         logs.info("%s:%d:%d: key=%s value=%s" % (msg.topic, msg.partition, msg.offset, msg.key, msg.value))
 
         new_document = {
+            "hostname": HOSTNAME,
             "partition": msg.partition,
             "offset": msg.offset,
             "value": msg.value.decode('utf-8'),
