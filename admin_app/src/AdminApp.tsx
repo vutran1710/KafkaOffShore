@@ -36,6 +36,8 @@ export default class AdminApp extends React.Component {
             {this.state.docs.map(r => (
               <li key={r._id} className="row">
                 <div>ID: {r._id}</div>
+                <div>Part: {r.partition}</div>
+                <div>Offset: {r.offset}</div>
                 <div>Value: {r.value}</div>
                 ====================
               </li>

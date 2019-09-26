@@ -29,6 +29,8 @@ while True:
         logs.info("%s:%d:%d: key=%s value=%s" % (msg.topic, msg.partition, msg.offset, msg.key, msg.value))
 
         new_document = {
+            "partition": msg.partition,
+            "offset": msg.offset,
             "value": msg.value.decode('utf-8'),
             "timestamp": int(datetime.now().strftime('%s')),
         }
