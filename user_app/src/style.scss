@@ -1,15 +1,134 @@
 body {
-  background: #f9fbff;
+  background: #eaedf0;
+}
+
+.author {
+  color: #bbb;
+  font-size: 12px;
+  text-align: right;
 }
 
 button {
-  color: red;
-  padding: 5px 15px;
-  font-size: 16px;
-  border-radius: 5px;
+  color: #838383;
+  padding: 10px 20px;
+  width: 300px;
+  font-size: 24px;
+  border-radius: 0;
+  border-color: transparent;
+  background: transparent;
+  cursor: pointer;
+  transition: color 1s, font-size .3s;
+  font-family: 'Mansalva', cursive;
+}
+
+button:hover {
+  color: #d09e54;
+  transition: color 1s, font-size .3s;
+  font-size: 28px;
 }
 
 button:disabled {
+  visibility: hidden;
+  transition: color 1s;
   color: #ddd;
-  background: #eee;
+  background: #f8f7f1;
+  cursor: not-allowed;
+  &:hover { font-size: 24px; }
+}
+
+.kafka-container {
+  width: 400px;
+  height: 600px;
+  max-height: 90vh;
+  max-width: 90vw;
+  background: #fffef8;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: fixed;
+  box-shadow: 0px 20px 97px -2px rgba(0,0,0,0.35);
+  border-left: solid 5px #d09e54;
+  border-radius: 0 10px 10px 0;
+}
+
+.kafka-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background: #e65a5a;
+  width: 200px;
+  height: 200px;
+  margin: auto;
+  margin-bottom: 50px;
+  transition: background 1s;
+}
+
+.kafka-image__dark {
+  background: #111;
+  transition: background 1s;
+  img {
+    width: 200px;
+  }
+}
+
+.title {
+
+  &--main {
+    font-size: 50px;
+    font-weight: 900;
+    color: #838383;
+    font-family: 'PT Mono', monospace;
+    display: flex;
+    justify-content: center;
+    > span {
+      width: 17%;
+      transform: translateX(10px);
+    }
+  }
+
+  &--sub {
+    font-size: 18px;
+    color: #b4b2b2;
+    margin: 15px auto;
+    letter-spacing: 9px;
+    text-align: center;
+    transform: translateX(2px);
+  }
+}
+
+.text {
+  &--center {
+    text-align: center;
+  }
+
+  &--right {
+    text-align: right;
+  }
+}
+
+.info-container {
+  margin: 50px auto;
+  padding: 20px;
+  height: auto;
+}
+
+.instruction {
+  padding: 20px;
+  font-size: 18px;
+  color: #888;
+  line-height: 24px;
+}
+
+.footer {
+  position: relative;
+  > div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 }
