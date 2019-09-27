@@ -9,7 +9,23 @@ import aiohttp_cors
 # Setup Kafka Producer
 kafka_server = getenv('KAFKA_SERVER')
 kafka_topic = getenv('KAFKA_TOPIC')
-producer = KafkaProducer(bootstrap_servers=kafka_server)
+
+producer = None
+retries = 0
+
+while not producer and retries < 5:
+    try:
+        retries += 1
+        producer = KafkaProducer(bootstrap_servers=kafka_server)
+    except:
+        producer = None
+        logs.debug('Not found broker, retrying after 2 seconds....')
+        time.sleep(2)
+
+if not producer:
+    raise SystemExit
+else:
+    logs.info('BROKER CONNECTED')
 
 # Setup API Handler
 routes = web.RouteTableDef()
@@ -28,6 +44,7 @@ async def send_integer_stream(request):
     """
     Send continuous random integers (0-10) 10 times, for testing purpose only
     """
+    count_request = request.query.get('count', 0)
     count = 0
 
     def on_send_success(record_metadata):
@@ -37,7 +54,7 @@ async def send_integer_stream(request):
         logs.error('ERROR', exc_info=excp)
         # handle exception
 
-    while count < 10:
+    while count < int(count_request):
         num_bytes = bytes(str(count), encoding='utf-8')
         producer.send(kafka_topic, value=num_bytes, key=num_bytes).add_callback(on_send_success).add_errback(on_send_error)
         count += 1

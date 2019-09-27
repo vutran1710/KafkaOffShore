@@ -145,3 +145,14 @@ body {
     transform: translate(-50%, -50%);
   }
 }
+
+.request-count-input {
+  border: none;
+  border-bottom: solid 1px #ccc;
+  position: fixed;
+  font-size: 20px;
+  top: 10px;
+  left: 10px;
+  background: transparent;
+  width: 50px;
+}

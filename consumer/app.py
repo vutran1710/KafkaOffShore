@@ -21,7 +21,21 @@ db = client.get(db_name, None) or client.create_database(db_name)
 while True:
 
     # initialize consumer to given topic and broker
-    consumer = KafkaConsumer(KAFKA_TOPIC, group_id='consumer-1', bootstrap_servers=KAFKA_SERVER)
+    consumer = None
+    try_count = 0
+    while not consumer and try_count < 5:
+        try:
+            try_count += 1
+            consumer = KafkaConsumer(KAFKA_TOPIC, group_id='consumer-1', bootstrap_servers=KAFKA_SERVER)
+        except:
+            logs.debug('Not found broker')
+            time.sleep(2)
+
+    if not consumer:
+        logs.error('=======> Too many retries! Exit program...')
+        raise SystemExit
+    else:
+        logs.info('BROKER CONNECTED')
 
     # loop and print messages
     for msg in consumer:

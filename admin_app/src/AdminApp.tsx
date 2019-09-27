@@ -10,12 +10,27 @@ const colors = [
   'purple',
 ]
 
+type Doc = {
+  _id: string;
+  hostname: string;
+  partition: number;
+  offset: number;
+  value: number;
+}
 
-export default class AdminApp extends React.Component {
+type AppState = {
+  loading: boolean;
+  db: PouchDB.Database<{}>;
+  docs: Doc[];
+  hostnameClass: object;
+}
 
-  constructor(props) {
+export default class AdminApp extends React.Component<{}, AppState> {
+
+  private myRef = React.createRef<HTMLDivElement>()
+
+  constructor(props: {}) {
     super(props)
-    this.myRef = React.createRef()
     this.state = {
       loading: false,
       db: undefined,
@@ -24,7 +39,7 @@ export default class AdminApp extends React.Component {
     }
   }
 
-  registerConsumer(hostname, prefix = 'row row--') {
+  registerConsumer(hostname: string, prefix = 'row row--') {
     if (this.state.hostnameClass[hostname]) {
       return `${prefix}${this.state.hostnameClass[hostname]}`
     }
@@ -69,7 +84,7 @@ export default class AdminApp extends React.Component {
           </div>
           <div className="legends">
             <div className="legends-item">
-              <b>Consumer_ID :</b>
+              Docker_Consumer_ID
             </div>
             {Object.keys(this.state.hostnameClass).map(k => (
               <div className="legends-item" key={k}>

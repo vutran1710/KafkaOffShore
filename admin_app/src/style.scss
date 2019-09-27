@@ -1,5 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Heebo:300&display=swap');
+
 body {
   background: #e9f0f2;
+  font-family: 'Heebo', sans-serif;
+  font-size: 12px;
 }
 
 * {
@@ -7,7 +11,6 @@ body {
 }
 
 button {
-  font-size: 14px;
   padding: 5px 15px;
   background: #999;
   color: #eee;
@@ -15,11 +18,11 @@ button {
 }
 
 small {
+  font-size: 0.8rem;
   color: #ccc;
 }
 
 .row {
-  font-size: 16px;
   padding: 10px;
   display: inline-block;
   color: white;
@@ -51,7 +54,6 @@ small {
   padding: 7px;
   background: #ddd;
   color: #888;
-  font-size: 11px;
   word-wrap: break-word;
 }
 
@@ -65,19 +67,24 @@ small {
 
 .page-title {
   font-weight: 900;
-  font-size: 22px;
+  font-size: 1.5rem;
 }
 
 .legends {
-  width: 40vw;
+  width: auto;
+  max-width: 60vw;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
+  padding: 10px;
+  background: white;
+  border-radius: 4px;
 }
 
 .legends-item {
   display: flex;
-  width: 30%;
+  width: auto;
+  margin: 0 10px;
 }
 
 .legends-color {
@@ -87,7 +94,6 @@ small {
 }
 
 .legends-text {
-  font-size: 13px;
   margin: 0;
   cursor: pointer;
   &:hover {
@@ -111,11 +117,13 @@ small {
 }
 
 .row--blue {
-  background: blue;
+  background: rgb(35,148,255);
+  background: linear-gradient(45deg, rgba(105,208,255,1) 0%, rgba(47,70,251,1) 100%);
 }
 
 .row--purple {
-  background: purple;
+  background: rgb(194,84,230);
+  background: linear-gradient(9deg, rgba(194,84,230,1) 0%, rgba(102,39,217,1) 100%);
 }
 
 .doc-container {
