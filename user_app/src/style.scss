@@ -4,37 +4,50 @@ body {
 
 .author {
   color: #bbb;
-  font-size: 12px;
+  font-size: 10px;
   text-align: right;
+  display: flex;
+  justify-content: space-between;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
-button {
+.button {
+  display: inline-block;
   color: #838383;
   padding: 10px 20px;
-  width: 300px;
+  width: auto;
   font-size: 24px;
   border-radius: 0;
   border-color: transparent;
   background: transparent;
   cursor: pointer;
-  transition: color 1s, font-size .3s;
+  transition: color 1s, font-size .5s;
   font-family: 'Mansalva', cursive;
 }
 
-button:hover {
+.button:hover {
   color: #d09e54;
-  transition: color 1s, font-size .3s;
-  font-size: 28px;
+  transition: color 1s, font-size .5s;
+  font-size: 26px;
 }
 
-button:disabled {
-  visibility: hidden;
-  transition: color 1s;
-  color: #ddd;
-  background: #f8f7f1;
-  cursor: not-allowed;
-  &:hover { font-size: 24px; }
+.button--disabled {
+  transition: color 1s, font-size .5s;
+  color: #e65a5a;
+  cursor: text;
+  font-size: 25px;
+  &:hover {
+    font-size: 25px;
+    color: #e65a5a;
+  }
 }
+
+.button:active {
+  transition: font-size .5s;
+  font-size: 20px;
+}
+
 
 .kafka-container {
   width: 400px;
@@ -51,7 +64,7 @@ button:disabled {
   position: fixed;
   box-shadow: 0px 20px 97px -2px rgba(0,0,0,0.35);
   border-left: solid 5px #d09e54;
-  border-radius: 0 10px 10px 0;
+  border-radius: 0 15px 15px 0;
 }
 
 .kafka-image {

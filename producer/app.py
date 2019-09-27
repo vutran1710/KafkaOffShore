@@ -37,12 +37,12 @@ async def send_integer_stream(request):
         logs.error('ERROR', exc_info=excp)
         # handle exception
 
-    while count < 50:
+    while count < 10:
         num_bytes = bytes(str(count), encoding='utf-8')
         producer.send(kafka_topic, value=num_bytes, key=num_bytes).add_callback(on_send_success).add_errback(on_send_error)
         count += 1
         logs.info('====== Count %s', count)
-        time.sleep(1)
+        time.sleep(0.1)
 
     return web.Response(text='Done, Final count: {}'.format(count))
 

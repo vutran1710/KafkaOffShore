@@ -19,7 +19,7 @@ const KafkaInterface = ({ loading }: Props) => {
         <span>K</span><span>A</span><span>F</span><span>K</span><span>A</span>
       </div>
       <div className="title--sub">
-        {loading ? 'PROCESSING...' : 'OFF THE SHORE'}
+        OFF THE SHORE
       </div>
     </div>
   )

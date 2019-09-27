@@ -1,3 +1,4 @@
+import time
 from datetime import datetime
 from logzero import logger as logs
 from os import getenv
@@ -39,3 +40,4 @@ while True:
 
         record = db.create_document(new_document)
         logs.info('New doc: %s, ---- at timestamp: %s', record['_id'], record['timestamp'])
+        time.sleep(1.5)

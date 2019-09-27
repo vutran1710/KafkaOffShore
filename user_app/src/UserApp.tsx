@@ -1,5 +1,5 @@
 import React from 'react'
-import wretch from 'wretch'
+// import wretch from 'wretch'
 import KafkaInterface from './KafkaInterface'
 import './style.scss'
 
@@ -15,24 +15,35 @@ export default class UserApp extends React.Component<{}, AppState> {
     this.state = {
       loading: false,
       hitCount: 0,
-      buttonText: "com' her!"
+      buttonText: "com' heree!"
     }
   }
 
   requestSendIntegerStream = () => {
+    if (this.state.loading) {
+      return
+    }
 
-    this.setState({
-      loading: true,
-      hitCount: this.state.hitCount + 1,
-    })
+    return setTimeout(() => {
+      this.setState({
+        loading: true,
+        buttonText: 'Sent!'
+      })
 
-    wretch('http://localhost:8080/api/stream_int').put().res().then(() => {
-      this.setState({ loading: false })
-    })
+      /*
+       * wretch('http://localhost:8080/api/stream_int').put().res().then(() => {
+       *   this.setState({ loading: false })
+       * })
+       *
+       */
+
+    }, 1000)
   }
 
   changeText = (buttonText: string) => () => {
-    this.setState({ buttonText })
+    if (!this.state.loading) {
+      this.setState({ buttonText })
+    }
   }
 
   render() {
@@ -45,21 +56,22 @@ export default class UserApp extends React.Component<{}, AppState> {
     return (
       <div className="kafka-container">
         <div className="author">
-          by <b>vutr</b>, inspired by <i>Haruki Murakami</i>
+          <div>inspired by</div>
+          <div>haruki murakami</div>
         </div>
         <div className="info-container">
           <KafkaInterface loading={loading} />
         </div>
         <div className="footer">
           <div className="text--center">
-            <button
-              disabled={loading}
+            <a
+              className={`button ${loading && 'button--disabled'}`}
               onClick={this.requestSendIntegerStream}
-              onMouseEnter={this.changeText('send kafka request?')}
-              onMouseLeave={this.changeText('click here!')}
+              onMouseEnter={this.changeText('send Kafka request?')}
+              onMouseLeave={this.changeText("com' heree!")}
             >
               {buttonText}
-            </button>
+            </a>
           </div>
         </div>
       </div>
