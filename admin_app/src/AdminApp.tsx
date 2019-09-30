@@ -99,7 +99,7 @@ export default class AdminApp extends React.Component<{}, AppState> {
           <ul>
             {this.state.docs.map(r => (
               <li key={r._id} className={this.registerConsumer(r.hostname)}>
-                <div>Part: {r.partition}</div>
+                <div>Partition: {r.partition}</div>
                 <div>Offset: {r.offset}</div>
                 <div>Value: {r.value}</div>
                 <hr />

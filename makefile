@@ -18,7 +18,7 @@ up:
 	docker-compose up -d
 
 up-scale:
-	docker-compose up -d --force-recreate --build --scale kafka=5 --scale kafka-consumer=5
+	docker-compose up -d --force-recreate --build --scale kafka=$(n) --scale kafka-consumer=$(n)
 
 fe_user:
 	echo "Running User Application to interact with Producer Backend API"
