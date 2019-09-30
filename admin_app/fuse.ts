@@ -1,5 +1,6 @@
 import {
   FuseBox,
+  ImageBase64Plugin,
   CSSPlugin,
   QuantumPlugin,
   SassPlugin,
@@ -28,6 +29,7 @@ const frontendServe = () => {
           outFile: file => `dist/${file}`,
         })
       ],
+      ImageBase64Plugin(),
     ],
   })
   fuse.dev({ hmr: true, port: 3002 })

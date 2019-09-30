@@ -1,5 +1,9 @@
 import React from 'react'
 import PouchDB from 'pouchdb'
+import ConsumerLabors from './ConsumerLabors'
+import DistributionContainer from './DistributionContainer'
+import Notification from './Notification'
+
 import './style.scss'
 
 const colors = [
@@ -23,6 +27,8 @@ type AppState = {
   db: PouchDB.Database<{}>;
   docs: Doc[];
   hostnameClass: object;
+  autoScroll: boolean;
+  consumerLabors: any;
 }
 
 export default class AdminApp extends React.Component<{}, AppState> {
@@ -34,37 +40,42 @@ export default class AdminApp extends React.Component<{}, AppState> {
     this.state = {
       loading: false,
       db: undefined,
-      docs: [],
-      hostnameClass: {}
+      docs: undefined,
+      hostnameClass: {},
+      autoScroll: true,
+      consumerLabors: {},
     }
   }
 
-  registerConsumer(hostname: string, prefix = 'row row--') {
-    if (this.state.hostnameClass[hostname]) {
-      return `${prefix}${this.state.hostnameClass[hostname]}`
+  registerDoc = d => {
+    const hostnameClass = { ...this.state.hostnameClass }
+    const consumerLabors = { ...this.state.consumerLabors }
+    const docs = [...(this.state.docs || []), d]
+
+    if (!this.state.hostnameClass[d.hostname]) {
+      const color = colors.find(c => !Object.values(this.state.hostnameClass).some(cls => cls === c))
+      hostnameClass[d.hostname] = color
     }
-    const color = colors.find(c => !Object.values(this.state.hostnameClass).some(cls => cls === c))
-    this.setState({
-      hostnameClass: {
-        ...this.state.hostnameClass,
-        [hostname]: color
-      }
-    })
-    return `${prefix}${color}`
+
+    consumerLabors[d.hostname] = (consumerLabors[d.hostname] || 0) + 1
+
+    this.setState({ hostnameClass, consumerLabors, docs })
   }
 
   async componentDidMount() {
     const remotedb = new PouchDB('http://localhost:5984/flightdb')
     const docs = await remotedb.allDocs({ include_docs: true }).then(resp => resp.rows.map(r => r.doc))
-    this.setState({ db: remotedb, docs })
+
+    docs.forEach(this.registerDoc)
+    this.setState({ db: remotedb })
+
     remotedb.changes({
       since: 'now',
       live: true,
       include_docs: true,
     }).on('change', change => {
-      const newDoc = change.doc
-      this.setState({ docs: [...this.state.docs, newDoc] })
-      this.scroll()
+      this.registerDoc(change.doc)
+      this.state.autoScroll && this.scroll()
     })
   }
 
@@ -76,44 +87,38 @@ export default class AdminApp extends React.Component<{}, AppState> {
 
   render() {
 
+    const {
+      hostnameClass,
+      consumerLabors,
+      docs: Docs,
+    } = this.state
+
+    const legendsClass = (hostname: string) => 'legends-color doc--' + hostnameClass[hostname]
+
     return (
-      <div>
-        <div className="header">
+      <div className="app-container">
+        <div className="header shadow">
           <div className="page-title">
             Admin App
           </div>
           <div className="legends">
-            <div className="legends-item">
-              Docker_Consumer_ID
-            </div>
-            {Object.keys(this.state.hostnameClass).map(k => (
+            {Object.keys(hostnameClass).map(k => (
               <div className="legends-item" key={k}>
-                <div className={this.registerConsumer(k, 'legends-color row--')} />
+                <div className={legendsClass(k)} />
                 <div className="legends-text">{k}</div>
+                <span className="count-tip">{consumerLabors[k]}</span>
               </div>
             ))}
           </div>
         </div>
-        <hr className="divider" />
-        <div className="doc-container" ref={this.myRef}>
-          <ul>
-            {this.state.docs.map(r => (
-              <li key={r._id} className={this.registerConsumer(r.hostname)}>
-                <div>Partition: {r.partition}</div>
-                <div>Offset: {r.offset}</div>
-                <div>Value: {r.value}</div>
-                <hr />
-                <div className="doc-id">
-                  {r._id}
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <hr className="divider" />
-        <div className="footer">
-          Doc count: {this.state.docs.length}
-        </div>
+        {!Docs && <Notification.Sync />}
+        {Docs && Docs.length === 0 && <Notification.Empty />}
+        {Docs && Docs.length && (
+          <div className="flex">
+            <DistributionContainer docs={Docs} classes={hostnameClass} />
+            <ConsumerLabors consumers={consumerLabors} colors={hostnameClass} />
+          </div>
+        )}
       </div>
     )
   }
