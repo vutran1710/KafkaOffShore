@@ -1,7 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Heebo:300,400,700,900&display=swap');
 
+$std-spacing: 10px;
+
 body {
-  background: #eaeff0;
+  background: white;
   font-family: 'Heebo', sans-serif;
   font-size: 12px;
   margin: 0;
@@ -14,73 +16,21 @@ body {
 }
 
 .shadow {
-  box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.21);
+  //box-shadow: 2px 0px 0px 0px rgba(0,0,0,0.11);
 }
 
 .app-container {
   width: 100%;
 }
 
-button {
-  padding: 5px 15px;
-  background: #999;
-  color: #eee;
-  border-radius: 5px;
-}
-
-small {
-  font-size: 0.8rem;
-  color: #ccc;
-}
-
-.row {
-  padding: 10px;
-  display: inline-block;
-  color: white;
-  background: white;
-  margin: 10px;
-  border-radius: 7px;
-  width: calc(10% - 20px);
-  overflow: hidden;
-  animation: fadeIn ease 200ms;
-  text-align: left;
-
-  hr {
-    margin: 10px -10px;
-    opacity: .3;
-  }
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity:0;
-  }
-  100% {
-    opacity:1;
-  }
-}
-
-.doc-id {
-  margin: -10px;
-  padding: 7px;
-  background: #ddd;
-  color: #888;
-  word-wrap: break-word;
-  font-size: 8px;
-}
-
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px;
-  background: white;
-  margin-bottom: 20px;
 }
 
 .page-title {
-  font-weight: 900;
-  font-size: 1.5rem;
+  margin: $std-spacing;
 }
 
 .legends {
@@ -88,65 +38,37 @@ small {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 10px;
 }
 
 .legends-item {
   position: relative;
   display: flex;
   width: auto;
-  margin: 0 20px;
+  margin: $std-spacing;
 }
 
 .legends-color {
   width: 15px;
   height: 15px;
-  margin-right: 10px;
+  margin-right: $std-spacing;
 }
 
 .legends-text {
-  margin: 0;
   cursor: pointer;
   &:hover {
     text-decoration: underline;
   }
 }
 
-.count-tip {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: #ff5600;
-  position: absolute;
-  top: -12px;
-  right: -20px;
-  color: white;
-  font-weight: 900;
-  text-align: center;
-  font-size: 10px;
-  line-height: 22px;
-}
-
 .empty-notif {
-  margin: 200px auto;
-  font-weight: 900;
-  font-size: 36px;
-  color: #ced7d7;
   text-shadow: #fff 1px 1px 0;
   text-align: center;
 }
 
 .container {
-  border-radius: 5px;
-  background: white;
-  padding: 20px;
 }
 
 .container-header {
-  font-size: 16px;
-  font-weight: 400;
-  margin-bottom: 10px;
-  color: #666;
 }
 
 .flex {
@@ -157,9 +79,8 @@ small {
   align-items: flex-start;
 
   .container {
-    width: calc(50% - 40px);
+    width: 50%;
     min-height: 240px;
-    margin: 20px;
   }
 
 }
@@ -169,43 +90,35 @@ small {
 }
 
 .chart-container {
-  background: transparent;
 }
 
 .doc--container {
   align-items: flex-start;
   display: flex;
-  margin-top: 25px;
 }
 
 .doc {
-  width: 20px;
-  height: 20px;
-  margin: 2px;
-  border-radius: 1px;
+  width: 17px;
+  height: 17px;
+  margin: 3px;
 }
 
-.doc--red {
-  background: rgb(252,18,79);
-  background: linear-gradient(228deg, rgba(252,18,79,1) 0%, rgba(255,101,201,1) 100%);
+.bg-red {
+  background: rgba(255, 99, 132, 0.8);
 }
 
-.doc--yellow {
-  background: rgb(255,113,0);
-  background: linear-gradient(228deg, rgba(255,113,0,1) 0%, rgba(235,195,0,1) 100%);
+.bg-yellow {
+  background: rgba(255, 185, 86, 0.8);
 }
 
-.doc--green {
-  background: rgb(2,212,116);
-  background: linear-gradient(228deg, rgba(2,190,100,1) 0%, rgba(140,233,145,1) 100%);
+.bg-green {
+  background: rgba(75, 222, 132, 0.8);
 }
 
-.doc--blue {
-  background: rgb(35,148,255);
-  background: linear-gradient(45deg, rgba(105,208,255,1) 0%, rgba(47,70,251,1) 100%);
+.bg-blue {
+  background: rgba(54, 162, 235, 0.8);
 }
 
-.doc--purple {
-  background: rgb(194,84,230);
-  background: linear-gradient(9deg, rgba(194,84,230,1) 0%, rgba(102,39,217,1) 100%);
+.bg-purple {
+  background: rgba(153, 102, 255, 0.8);
 }

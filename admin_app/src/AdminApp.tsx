@@ -93,7 +93,7 @@ export default class AdminApp extends React.Component<{}, AppState> {
       docs: Docs,
     } = this.state
 
-    const legendsClass = (hostname: string) => 'legends-color doc--' + hostnameClass[hostname]
+    const legendsClass = (hostname: string) => 'legends-color bg-' + hostnameClass[hostname]
 
     return (
       <div className="app-container">
@@ -102,11 +102,13 @@ export default class AdminApp extends React.Component<{}, AppState> {
             Admin App
           </div>
           <div className="legends">
+            <div className="legends-item">
+              Consumer ID
+            </div>
             {Object.keys(hostnameClass).map(k => (
               <div className="legends-item" key={k}>
                 <div className={legendsClass(k)} />
                 <div className="legends-text">{k}</div>
-                <span className="count-tip">{consumerLabors[k]}</span>
               </div>
             ))}
           </div>

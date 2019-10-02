@@ -5,7 +5,7 @@ const DistributionContainer = ({
   classes,
 }) => {
 
-  const itemClass = (hostname: string) => `doc doc--${classes[hostname]}`
+  const itemClass = (hostname: string) => `doc bg-${classes[hostname]}`
   return (
     <div className="container shadow distribution-container">
       <div className="container-header">

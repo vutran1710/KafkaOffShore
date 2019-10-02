@@ -48,7 +48,6 @@ export default class ConsumerLabors extends React.Component {
           maintainAspectRatio: false,
           scales: {
             xAxes: [{
-              barPercentage: 0.9,
               ticks: {
                 min: 0,
                 stepSize: 1,
@@ -59,20 +58,24 @@ export default class ConsumerLabors extends React.Component {
               gridLines: {
                 display: false,
                 drawBorder: false,
+                drawTicks: false,
               },
             }],
             yAxes: [{
-              barThickness: 15,
-              barPercentage: 1,
+              barThickness: 17,
               gridLines: {
                 display: false,
                 drawBorder: false,
+                drawTicks: false,
+              },
+              ticks: {
+                display: false,
               }
             }]
           },
           plugins: {
             datalabels: {
-              color: '#000',
+              color: '#555',
               anchor: 'end',
               align: 'end',
               clamp: false,
@@ -95,8 +98,8 @@ export default class ConsumerLabors extends React.Component {
         <div className="container-header">
           Worker Labor Graph
         </div>
-        <div style={{ padding: 5 }}>
-          <canvas id="labor-chart" style={{ height: 200 }} />
+        <div>
+          <canvas id="labor-chart" style={{ height: 114 }} />
         </div>
       </div>
     )
