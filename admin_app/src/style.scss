@@ -1,14 +1,17 @@
 @import url('https://fonts.googleapis.com/css?family=Heebo:300,400,700,900&display=swap');
 
-$std-spacing: 10px;
+$std-spacing: 20px;
+$base-bg: #f1f4f7;
+$upper-bg: white;
+$border-rad: 2px;
 
 body {
-  background: white;
+  background: $base-bg;
   font-family: 'Heebo', sans-serif;
   font-size: 12px;
   margin: 0;
   padding: 0;
-  color: #333;
+  color: #555;
 }
 
 * {
@@ -27,6 +30,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background: $upper-bg;
+  margin-bottom: 3 * $std-spacing;
 }
 
 .page-title {
@@ -66,9 +71,14 @@ body {
 }
 
 .container {
+  background: $upper-bg;
+  padding: $std-spacing;
+  border-radius: $border-rad;
+  margin: $std-spacing;
 }
 
 .container-header {
+  margin-bottom: $std-spacing;
 }
 
 .flex {
@@ -79,14 +89,12 @@ body {
   align-items: flex-start;
 
   .container {
-    width: 50%;
-    min-height: 240px;
+    width: calc(50% - #{2 * $std-spacing});
   }
 
 }
 
 .distribution-container {
-  height: 650px;
 }
 
 .chart-container {
