@@ -14,7 +14,6 @@ const DistributionContainer = ({
       <div className="flex doc--container">
         {docs.map(t => (
           <div className={itemClass(t.hostname)} key={t._id}>
-            {t._value}
           </div>
         ))}
       </div>

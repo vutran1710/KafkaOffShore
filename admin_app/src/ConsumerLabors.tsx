@@ -10,7 +10,12 @@ const BarColors = {
   purple: "rgba(153, 102, 255, 0.8)",
 }
 
-export default class ConsumerLabors extends React.Component {
+type Props = {
+  consumers: any;
+  colors: any;
+}
+
+export default class ConsumerLabors extends React.Component<Props, {}> {
   CHART = undefined
 
   componentDidUpdate() {
@@ -19,7 +24,6 @@ export default class ConsumerLabors extends React.Component {
       colors,
     } = this.props
 
-    console.log('consumer', consumers)
     const chartData = {
       labels: Object.keys(consumers),
       datasets: [{
