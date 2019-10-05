@@ -103,6 +103,7 @@ body {
   font-weight: 700;
   font-size: 1rem;
   opacity: .6;
+  width: 100%;
 }
 
 .flex {
@@ -115,18 +116,26 @@ body {
   &.flex-column {
     flex-direction: column;
   }
-
-  .container {
-    width: calc(50% - #{2 * $std-spacing});
-  }
-
 }
+
+.flex-container {
+  display: flex;
+}
+
+.flex-item {
+  display: flex;
+  width: auto;
+}
+
+.w_50 { width: 50%; }
+.w_100 { width: 100%; }
 
 .distribution-container {
 }
 
 .chart-container {
   margin-bottom: $std-spacing;
+  width: calc(100% - #{2 * $std-spacing});
 }
 
 .doc--container {

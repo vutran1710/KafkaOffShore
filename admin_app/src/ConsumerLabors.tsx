@@ -1,14 +1,7 @@
 import * as React from 'react'
 import Chart from 'chart.js'
-import 'chartjs-plugin-datalabels'
-
-const BarColors = {
-  red: "rgba(255, 99, 132, 0.8)",
-  yellow: "rgba(255, 185, 86, 0.8)",
-  green: "rgba(75, 222, 132, 0.8)",
-  blue: "rgba(54, 162, 235, 0.8)",
-  purple: "rgba(153, 102, 255, 0.8)",
-}
+import ChartDataLabels from 'chartjs-plugin-datalabels'
+import { BarColors } from './constants'
 
 type Props = {
   consumers: any;
@@ -33,11 +26,13 @@ export default class ConsumerLabors extends React.Component<Props, {}> {
     }
 
     if (!this.CHART) {
+      Chart.plugins.unregister(ChartDataLabels)
       const ctx = document.getElementById('labor-chart').getContext('2d') as HTMLCanvasElement
 
       this.CHART = new Chart(ctx, {
         type: 'horizontalBar',
         data: chartData,
+        plugins: [ChartDataLabels],
         options: {
           legend: {
             display: false,
@@ -54,7 +49,7 @@ export default class ConsumerLabors extends React.Component<Props, {}> {
             xAxes: [{
               ticks: {
                 min: 0,
-                stepSize: 1,
+                stepSize: 5,
                 maxTicksLimit: 10,
                 padding: 10,
                 display: false,

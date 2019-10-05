@@ -7,7 +7,7 @@ const DistributionContainer = ({
 
   const itemClass = (hostname: string) => `doc bg-${classes[hostname]}`
   return (
-    <div className="container shadow distribution-container">
+    <div className="container distribution-container w_50">
       <div className="container-header">
         Document Insertion Graph <i>({docs.length} total)</i>
       </div>
