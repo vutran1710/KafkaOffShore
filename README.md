@@ -1,10 +1,42 @@
-## SETUP
+<p align="center">
+  <img width="460" height="400" src="./docs/head_ss.png">
+</p>
+
+## with CouchDB, KafkaManager and Chartjs
+Here we are going to simulate a system using Kafka to examine its capability to handle continous data distribution, and at the
+same time testing how `PouchDB` and `CouchDB` can do auto-sync between frontend and backend
+
+### SCREENSHOTS
+<p align="center">
+  <img src="/docs/kafka_ss.png" width="400" height="250" style="margin-right:10px;border:solid 2px #ddd;padding:5px;"/>
+  <img src="/docs/db_ss.png" width="400" height="250" style="border:solid 2px #ddd;padding:5px;"/>
+</p>
+
+<p align="center">
+  <img src="/docs/user_ss.png" width="400" height="250" style="margin-right:10px;border:solid 2px #ddd;padding:5px;"/>
+  <img src="/docs/admin_ss.png" width="400" height="250" style="border:solid 2px #ddd;padding:5px;"/>
+</p>
+
+
+### SETUP
+There are 8 components:
+1. Kafka Brokers
+2. Zookeeper
+3. Kafka Manger
+4. CouchDB
+5. User Frontend Application
+6. Admin Frontend Application
+7. Kafka Consumer
+8. Backend API as Kafka Producer
+
 
 #### Prerequisites:
 1. Node, Npm
 2. Make
 3. Pipenv
 4. Docker
+
+
 
 #### Proceed:
 
@@ -43,14 +75,15 @@ $ make producer_dev
 
 Using Kafka-Manager to add **Cluster** then setup proper **partition-assignment**, going to *http://localhost:9000*
 
-## SPECIALS
-Run docker with scaled service (3 consumers, 3 kafka brokers)
+### SPECIALS
+Run docker with scaled services (5 consumers, 5 kafka brokers)
+*NOTE: frontend applications support maximum 5 consumers and 5 brokers for the sake of personal computer usage limit*
 
 ``` shell
-$ make up-scale
+$ make up-scale n=5
 ```
 
-## DATA DESCRIPTION
+### DATA DESCRIPTION
 Using Youtube Dataset downloaded from http://netsg.cs.sfu.ca/youtubedata/
 **Data format**:
 
@@ -67,7 +100,7 @@ comments	an integer number of the comments
 related IDs	up to 20 strings of the related video IDs
 ```
 
-## TODO
+### TODO
 Considering what to add to sweeten the pot and make shit easier to understand!
 
 - [x] Add CouchDB
