@@ -36,8 +36,6 @@ type AppState = {
 
 export default class AdminApp extends React.Component<{}, AppState> {
 
-  private myRef = React.createRef<HTMLDivElement>()
-
   constructor(props: {}) {
     super(props)
     this.state = {
@@ -50,7 +48,7 @@ export default class AdminApp extends React.Component<{}, AppState> {
     }
   }
 
-  registerDoc = (d: Doc, realtimeUpdate) => {
+  registerDoc = (d: Doc, realtimeUpdate = false) => {
     const hostnameClass = { ...this.state.hostnameClass }
     const consumerLabors = { ...this.state.consumerLabors }
 
