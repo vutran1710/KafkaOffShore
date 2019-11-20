@@ -13,7 +13,9 @@ logs.info('Hostname: %s', str(HOSTNAME))
 logs.info('=====> Kafka Servers: %s', str(KAFKA_SERVER))
 
 couchdb_server = getenv('COUCHDB_SERVER')
-client = CouchDB('admin', '1234abc', url='http://{}'.format(couchdb_server), connect=True)
+user, pwd = 'admin', '1234abc'
+url = 'http://{}'.format(couchdb_server)
+client = CouchDB(user, pwd, url=url, connect=True)
 db_name = 'flightdb'
 db = client.get(db_name, None) or client.create_database(db_name)
 
@@ -26,8 +28,10 @@ while True:
     while not consumer and try_count < 5:
         try:
             try_count += 1
-            consumer = KafkaConsumer(KAFKA_TOPIC, group_id='consumer-1', bootstrap_servers=KAFKA_SERVER)
-        except:
+            consumer = KafkaConsumer(KAFKA_TOPIC,
+                                     group_id='consumer-1',
+                                     bootstrap_servers=KAFKA_SERVER)
+        except Exception:
             logs.debug('Not found broker')
             time.sleep(2)
 
@@ -42,7 +46,9 @@ while True:
         # NOTE: in case of downtime, how to recover the missing data?
         # Verify block height?
         # then do what?
-        logs.info("%s:%d:%d: key=%s value=%s" % (msg.topic, msg.partition, msg.offset, msg.key, msg.value))
+        topic, partition = msg.topic, msg.partition
+        offset, key, value = msg.offset, msg.key, msg.value
+        logs.info("%s:%d:%d: key=%s value=%s", topic, partition, offset, key, value)  # yapf: disable
 
         new_document = {
             "hostname": HOSTNAME,
@@ -53,5 +59,6 @@ while True:
         }
 
         record = db.create_document(new_document)
-        logs.info('New doc: %s, ---- at timestamp: %s', record['_id'], record['timestamp'])
+        logs.info('New doc: %s, ---- at timestamp: %s', record['_id'],
+                  record['timestamp'])
         time.sleep(1.5)

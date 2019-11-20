@@ -1,5 +1,4 @@
 import time
-import random
 from os import getenv
 from logzero import logger as logs
 from kafka import KafkaProducer
@@ -17,7 +16,7 @@ while not producer and retries < 5:
     try:
         retries += 1
         producer = KafkaProducer(bootstrap_servers=kafka_server)
-    except:
+    except Exception:
         producer = None
         logs.debug('Not found broker, retrying after 2 seconds....')
         time.sleep(2)
@@ -30,6 +29,7 @@ else:
 # Setup API Handler
 routes = web.RouteTableDef()
 
+
 @routes.get('/')
 async def get_handler(request):
     return web.Response(text="Hello, Application is UP!")
@@ -38,6 +38,7 @@ async def get_handler(request):
 @routes.post('/post')
 async def post_handler(request):
     pass
+
 
 @routes.put('/api/stream_int')
 async def send_integer_stream(request):
@@ -48,7 +49,8 @@ async def send_integer_stream(request):
     count = 0
 
     def on_send_success(record_metadata):
-        logs.info('Success! value sent == %s' % record_metadata.value.decode('utf-8'))
+        sent_value = record_metadata.value.decode('utf-8')
+        logs.info('Success! value sent == %s' % sent_value)
 
     def on_send_error(excp):
         logs.error('ERROR', exc_info=excp)
@@ -56,7 +58,12 @@ async def send_integer_stream(request):
 
     while count < int(count_request):
         num_bytes = bytes(str(count), encoding='utf-8')
-        producer.send(kafka_topic, value=num_bytes, key=num_bytes).add_callback(on_send_success).add_errback(on_send_error)
+        producer.send(
+            kafka_topic,
+            value=num_bytes,
+            key=num_bytes,
+        ).add_callback(on_send_success).add_errback(on_send_error)
+
         count += 1
         logs.info('====== Count %s', count)
         time.sleep(0.1)
@@ -68,13 +75,12 @@ app = web.Application()
 app.add_routes(routes)
 
 # Configure default CORS settings.
-cors = aiohttp_cors.setup(app, defaults={
-    "*": aiohttp_cors.ResourceOptions(
-        expose_headers="*",
-        allow_headers="*",
-        allow_methods="*",
-    )
-})
+default_cors_config = aiohttp_cors.ResourceOptions(
+    expose_headers="*",
+    allow_headers="*",
+    allow_methods="*",
+)
+cors = aiohttp_cors.setup(app, defaults={"*": default_cors_config})
 
 # Configure CORS on all routes.
 for route in list(app.router.routes()):
