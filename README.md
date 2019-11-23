@@ -114,6 +114,7 @@ Considering what to add to sweeten the pot and make shit easier to understand!
 - [x] Scale Broker
 - [ ] Crash some services for testing
 - [ ] Apache Beam?
+- [ ] Apache Avro
 - [ ] KSQL?
 - [ ] Deploy everything with **Kubernetes**
 - [ ] Stress-testing
