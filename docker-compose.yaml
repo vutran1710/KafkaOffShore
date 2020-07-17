@@ -3,6 +3,8 @@ version: '3.6'
 networks:
   bridge:
     driver: bridge
+  spark-net:
+    driver: overlay
 
 services:
   couchdb:
@@ -89,3 +91,32 @@ services:
       COUCHDB_SERVER: "couchdb:5984"
     networks:
       - bridge
+
+   spark-master:
+    image: "sdesilva26/spark_master:0.0.2"
+    ports:
+      - "8080:8080"
+    networks:
+      - spark-net
+    deploy:
+      placement:
+        # set node labels using docker node update --label-add key=value <NODE ID> from swarm manager
+        constraints:
+          - node.labels.role==master
+
+  spark-worker:
+    image: "sdesilva26/spark_worker:0.0.2"
+    ports:
+      - "8081:8081"
+    environment:
+      - CORES=1
+      - MEMORY=1G
+    deploy:
+      placement:
+        # set node labels using docker node update --label-add key=value <NODE ID> from swarm manager
+        constraints:
+          - node.labels.role==worker
+      # Deploy 2 containers for this service
+      replicas: 2
+    networks:
+      - spark-net

@@ -8,6 +8,8 @@ setup:
 	cd ..
 	cd consumer && pipenv install
 	cd ..
+	cd spark && pipenv install
+	cd ..
 	echo "===== Getting dockerization"
 	docker-compose up -d --build
 
