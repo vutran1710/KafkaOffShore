@@ -3,8 +3,6 @@ version: '3.6'
 networks:
   bridge:
     driver: bridge
-  spark-net:
-    driver: overlay
 
 services:
   couchdb:
@@ -60,63 +58,51 @@ services:
     networks:
       - bridge
 
-  kafka-producer:
-    image: kafka-flink-producer
-    build:
-      dockerfile: Dockerfile
-      context: ./producer
-    depends_on:
-      - kafka
-    environment:
-      KAFKA_SERVER: "kafka:9092"
-      ZOOKEEPER_SERVER: "zookeeper:32181"
-      KAFKA_TOPIC: "flight"
-      PRODUCER_INTERVAL: 10
-    ports:
-      - 8080:8080
-    networks:
-      - bridge
+  # kafka-producer:
+  #   image: kafka-flink-producer
+  #   build:
+  #     dockerfile: Dockerfile
+  #     context: ./producer
+  #   depends_on:
+  #     - kafka
+  #   environment:
+  #     KAFKA_SERVER: "kafka:9092"
+  #     ZOOKEEPER_SERVER: "zookeeper:32181"
+  #     KAFKA_TOPIC: "flight"
+  #     PRODUCER_INTERVAL: 10
+  #   ports:
+  #     - 8080:8080
+  #   networks:
+  #     - bridge
 
-  kafka-consumer:
-    image: kafka-flink-consumer
-    build:
-      dockerfile: Dockerfile
-      context: ./consumer
-    depends_on:
-      - kafka-producer
-    environment:
-      KAFKA_SERVER: "kafka:9092"
-      ZOOKEEPER_SERVER: "zookeeper:32181"
-      KAFKA_TOPIC: "flight"
-      COUCHDB_SERVER: "couchdb:5984"
-    networks:
-      - bridge
+  # kafka-consumer:
+  #   image: kafka-flink-consumer
+  #   build:
+  #     dockerfile: Dockerfile
+  #     context: ./consumer
+  #   depends_on:
+  #     - kafka-producer
+  #   environment:
+  #     KAFKA_SERVER: "kafka:9092"
+  #     ZOOKEEPER_SERVER: "zookeeper:32181"
+  #     KAFKA_TOPIC: "flight"
+  #     COUCHDB_SERVER: "couchdb:5984"
+  #   networks:
+  #     - bridge
 
-   spark-master:
-    image: "sdesilva26/spark_master:0.0.2"
+  spark-master:
+    image: "bitnami/spark:latest"
     ports:
       - "8080:8080"
+      - "7077:7077"
     networks:
-      - spark-net
-    deploy:
-      placement:
-        # set node labels using docker node update --label-add key=value <NODE ID> from swarm manager
-        constraints:
-          - node.labels.role==master
+      - bridge
 
   spark-worker:
-    image: "sdesilva26/spark_worker:0.0.2"
+    image: "bitnami/spark:latest"
     ports:
-      - "8081:8081"
+      - "8081-8085:8081"
     environment:
-      - CORES=1
-      - MEMORY=1G
-    deploy:
-      placement:
-        # set node labels using docker node update --label-add key=value <NODE ID> from swarm manager
-        constraints:
-          - node.labels.role==worker
-      # Deploy 2 containers for this service
-      replicas: 2
+      - SPARK_MODE=worker
     networks:
-      - spark-net
+      - bridge

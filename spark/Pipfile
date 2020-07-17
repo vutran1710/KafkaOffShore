@@ -4,6 +4,9 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+black = "*"
+pylint = "*"
+jedi = "*"
 
 [packages]
 pyspark = "*"
@@ -14,3 +17,6 @@ python_version = "3.7"
 
 [scripts]
 dev = "python app.py"
+
+[pipenv]
+allow_prereleases = true
