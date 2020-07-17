@@ -91,18 +91,17 @@ services:
   #     - bridge
 
   spark-master:
-    image: "bitnami/spark:latest"
+    image: bitnami/spark:latest
     ports:
       - "8080:8080"
       - "7077:7077"
-    networks:
-      - bridge
 
   spark-worker:
-    image: "bitnami/spark:latest"
+    image: bitnami/spark:latest
     ports:
-      - "8081-8085:8081"
+      - "8081-8083:8081"
     environment:
       - SPARK_MODE=worker
-    networks:
-      - bridge
+      - SPARK_MASTER_URL=spark://spark-master:7077
+      - SPARK_WORKER_MEMORY=1G
+      - SPARK_WORKER_CORES=1
