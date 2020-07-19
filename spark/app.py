@@ -1,6 +1,5 @@
 """ Spark code
 """
-from time import sleep
 from logzero import logger as log
 from pyspark import SparkContext, SparkConf
 
@@ -15,22 +14,17 @@ sc = SparkContext(conf=conf)
 sc.setLogLevel("INFO")
 
 
-data = [1, 2, 3, 5]
-flow = sc.parallelize(data)
-
-
-def mapper(val):
+def multiply(val):
     """ A fake map function
     """
     log.info("this is a value before multiplication: %s", val)
     newval = val * 2
 
-    for _ in range(5):
-        log.warning("Fake processing...: val=%s -> newval=%s", val, newval)
+    log.warning("Fake processing...: val=%s -> newval=%s", val, newval)
 
     log.info("this is a value after multiplication: %s", newval)
     return newval
 
 
-result = flow.map(mapper).collect()
+result = sc.parallelize(range(10)).map(multiply).collect()
 log.info(">>> Result = %s", result)

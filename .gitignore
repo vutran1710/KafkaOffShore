@@ -3,3 +3,4 @@
 dist/
 .couchdb/
 .data/
+flycheck_*
