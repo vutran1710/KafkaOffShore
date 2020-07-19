@@ -41,11 +41,6 @@ services:
     container_name: kos_zeppelin
     ports:
       - 8079:8080
-    links:
-      - kafka:kafka
-    depends_on:
-      - kafka
-      - spark-master
     environment:
       ZEPPELIN_LOG_DIR: /logs
       ZEPPELIN_NOTEBOOK_DIR: /notebook
