@@ -2,7 +2,9 @@
 """
 from time import sleep
 from typing import Callable
+from json import dumps
 from datetime import datetime
+import socket
 from logzero import logger as log
 from kafka import KafkaConsumer
 from config import AppConfig
@@ -15,6 +17,23 @@ class Consumer:
     def __init__(self, cfg: AppConfig):
         self._server = cfg.KAFKA_SERVER
         self._topic = cfg.KAFKA_TOPIC
+        self._sk = None
+
+    def create_socket_host(self):
+        """ create a local-socket to foward data from kafka to spark
+        """
+        tcp_ip = "localhost"
+        tcp_port = 9009
+        conn = None
+        self._sk = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self._sk.bind((tcp_ip, tcp_port))
+        self._sk.listen(1)
+
+        log.info("Waiting for TCP connection...")
+        conn, addr = self._sk.accept()
+        log.info("Connected...")
+
+        return conn, addr
 
     def try_connect(self) -> KafkaConsumer:
         """ trying to connect to kafka
@@ -34,7 +53,7 @@ class Consumer:
         log.error("=======> No broker! Exit program...")
         raise SystemExit
 
-    def read_stream(self, callback: Callable = None):
+    def read_stream(self):
         """ read stream from kafka and forward to callback
         """
         while True:
@@ -54,7 +73,8 @@ class Consumer:
                     "timestamp": int(datetime.now().strftime("%s")),
                 }
 
-                if callback:
-                    callback(data)
+                if self._sk:
+                    self._sk.send(dumps(data))
                 else:
-                    log.debug("Received data >> %s", data)
+                    log.warning("======= Read-stream not being forwarded")
+                    log.info(data)

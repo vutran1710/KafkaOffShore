@@ -11,8 +11,10 @@ class AppConfig(BaseModel):
     - all keys are required
     """
 
-    BROKERS: str
-    TOPIC: str
+    KAFKA_TOPIC: str
+    KAFKA_SERVER: str
+    SPARK_APP_NAME: str
+    SPARK_REMOTE_URL: str
     LOG_LEVEL: int
 
     @staticmethod
