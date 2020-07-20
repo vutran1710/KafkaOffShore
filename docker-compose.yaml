@@ -91,3 +91,20 @@ services:
     volumes:
       - ./.mnt/spark-apps:/opt/spark-apps
       - ./.mnt/spark-data:/opt/spark-data
+
+  kafka-spark-connector:
+    image: kafka-spark-connect
+    container_name: kos_kafka-spark-connector
+    build:
+      dockerfile: Dockerfile
+      context: ./spark
+    depends_on:
+      - spark-master
+    environment:
+      - KAFKA_TOPIC=flight
+      - KAFKA_SERVER=kafka:9092
+      - SPARK_APP_NAME=streamapp
+      - SPARK_REMOTE_URL=spark://spark-master:7077
+      - LOG_LEVEL=10
+    ports:
+      - 8000:8000
