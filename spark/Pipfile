@@ -12,6 +12,7 @@ jedi = "*"
 pyspark = "*"
 logzero = "*"
 pydantic = "*"
+kafka-python = "*"
 
 [requires]
 python_version = "3.6"
