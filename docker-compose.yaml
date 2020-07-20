@@ -106,5 +106,3 @@ services:
       - SPARK_APP_NAME=streamapp
       - SPARK_REMOTE_URL=spark://spark-master:7077
       - LOG_LEVEL=10
-    ports:
-      - 8000:8000
