@@ -13,6 +13,7 @@ class AppConfig(BaseModel):
 
     KAFKA_TOPIC: str
     KAFKA_SERVER: str
+    ZOOKEEPER_SERVER: str
     COUCHDB_SERVER: str
     LOG_LEVEL: int
 
