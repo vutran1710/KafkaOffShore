@@ -14,6 +14,8 @@ services:
     environment:
       - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
       - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_CFG_NUM_PARTITIONS=2
+      - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=true
 
   cmak:
     image: hlebalbau/kafka-manager:stable

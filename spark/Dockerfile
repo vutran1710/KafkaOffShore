@@ -1,11 +1,15 @@
-FROM kennethreitz/pipenv:latest
+FROM python:3.6-slim
 
-WORKDIR /
+WORKDIR /app
 
 COPY . .
 
 RUN chmod +x wait-for-it.sh
 
-RUN pipenv install --deploy --system
+RUN apt-get update && apt-get install gcc -y && pip install pipenv
 
-CMD ./wait-for-it.sh -s -t 60 $KAFKA_SERVER -- pipenv run dev
+RUN pipenv install --deploy
+
+EXPOSE 9009
+
+CMD STAGE=PRODUCTION ./wait-for-it.sh -s -t 60 $KAFKA_SERVER -- pipenv run dev
