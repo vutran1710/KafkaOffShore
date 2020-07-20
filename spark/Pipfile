@@ -11,12 +11,13 @@ jedi = "*"
 [packages]
 pyspark = "*"
 logzero = "*"
+pydantic = "*"
 
 [requires]
 python_version = "3.6"
 
 [scripts]
-dev = "python app.py"
+dev = "python main.py"
 
 [pipenv]
 allow_prereleases = true
