@@ -4,18 +4,23 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+black = "*"
+pylint = "*"
+jedi = "*"
 
 [packages]
 kafka-python = "*"
-python-dotenv = "*"
 logzero = "*"
 cloudant = "*"
-aiohttp = "*"
-aiohttp-devtools = "*"
-aiohttp-cors = "*"
+fastapi = "*"
+pydantic = "*"
+uvicorn = "*"
 
 [requires]
 python_version = "3.7"
 
 [scripts]
-dev = "adev runserver . -p 8080"
+dev = "uvicorn main:app --reload"
+
+[pipenv]
+allow_prereleases = true
