@@ -23,3 +23,10 @@ async def get_user_feed(count: int = 0):
         sleep(0.1)
 
     return "OK"
+
+
+@router.get("/ping", response_model=Any)
+async def ping():
+    """ health-check
+    """
+    return "OK"

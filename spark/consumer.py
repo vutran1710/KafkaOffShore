@@ -73,6 +73,8 @@ class Consumer:
                     "timestamp": int(datetime.now().strftime("%s")),
                 }
 
+                log.info(">> new data: %s", data)
+
                 if self._sk:
                     self._sk.send(dumps(data))
                 else:

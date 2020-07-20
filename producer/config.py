@@ -1,6 +1,7 @@
 """ load config
 """
 from os import environ
+from typing import Optional
 from configparser import ConfigParser
 from logzero import logger, loglevel
 from pydantic import BaseModel
@@ -13,8 +14,8 @@ class AppConfig(BaseModel):
 
     KAFKA_TOPIC: str
     KAFKA_SERVER: str
-    ZOOKEEPER_SERVER: str
-    COUCHDB_SERVER: str
+    ZOOKEEPER_SERVER: Optional[str]
+    COUCHDB_SERVER: Optional[str]
     LOG_LEVEL: int
 
     @staticmethod
