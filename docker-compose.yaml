@@ -38,11 +38,11 @@ services:
     depends_on:
       - kafka
     environment:
-      KAFKA_SERVER: "kafka:9092"
-      ZOOKEEPER_SERVER: "zookeeper:2181"
-      KAFKA_TOPIC: "flight"
-      LOG_LEVEL: 10
-      STAGE: "PRODUCTION"
+      - KAFKA_SERVER=kafka:9092
+      - ZOOKEEPER_SERVER=zookeeper:2181
+      - KAFKA_TOPIC=flight
+      - LOG_LEVEL=10
+      - STAGE=PRODUCTION
     ports:
       - 8000:8000
 
@@ -61,7 +61,7 @@ services:
       - ./.data/kafka-poc/kafka-data:/data/kafka-poc/kafka-data
 
   spark-master:
-    image: docker.io/bitnami/spark:3-debian-10
+    image: bitnami/spark:3
     container_name: kos_spark-master
     environment:
       - SPARK_MODE=master
@@ -75,7 +75,7 @@ services:
       - 7077:7077
 
   spark-worker:
-    image: docker.io/bitnami/spark:3-debian-10
+    image: bitnami/spark:3
     depends_on:
       - spark-master
     environment:
