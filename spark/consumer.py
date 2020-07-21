@@ -24,16 +24,10 @@ class Consumer:
         """
         tcp_ip = "localhost"
         tcp_port = 9009
-        conn = None
         self._sk = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self._sk.bind((tcp_ip, tcp_port))
         self._sk.listen(1)
-
-        log.info("Waiting for TCP connection...")
-        conn, addr = self._sk.accept()
-        log.info("Connected...")
-
-        return conn, addr
+        return tcp_ip, tcp_port
 
     def try_connect(self) -> KafkaConsumer:
         """ trying to connect to kafka
@@ -46,6 +40,7 @@ class Consumer:
             )
 
             if consumer:
+                log.info("BROKER CONNECTED")
                 return consumer
 
             sleep(1)
@@ -66,17 +61,11 @@ class Consumer:
                     "%s:%d:%d: key=%s value=%s", topic, partition, offset, key, value
                 )
 
-                data = {
-                    "partition": msg.partition,
-                    "offset": msg.offset,
-                    "value": msg.value.decode("utf-8"),
-                    "timestamp": int(datetime.now().strftime("%s")),
-                }
-
+                data = int(msg.value.decode("utf-8"))
                 log.info(">> new data: %s", data)
 
                 if self._sk:
-                    self._sk.send(dumps(data))
+                    self._sk.send(data)
                 else:
                     log.warning("======= Read-stream not being forwarded")
                     log.info(data)

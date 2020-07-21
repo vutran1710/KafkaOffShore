@@ -1,5 +1,6 @@
 """ Spark-Streamer Client
 """
+from logzero import logger as log
 from pyspark import SparkContext, SparkConf
 from pyspark.streaming import StreamingContext
 from config import AppConfig
@@ -20,4 +21,13 @@ class SparkStreaming:
         ctx.setLogLevel("WARN")
         self._ssc = StreamingContext(ctx, 2)
         # self._ssc.checkpoint("checkpoint_app")
-        self._ssc.socketTextStream("localhost", 9009)
+
+    def map_r(self, host, port):
+        """ handle stream
+        """
+        data = self._ssc.socketTextStream(host, port)
+        result = data.flatMap(lambda x: int(x) * 2).map(lambda x: x)
+        log.info("Collected result: %s", result)
+
+        self._ssc.start()
+        self._ssc.awaitTermination()

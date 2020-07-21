@@ -9,8 +9,9 @@ if __name__ == "__main__":
     cfg = AppConfig.load()
     log.debug(cfg)
 
-    # SparkStreaming(cfg)
+    spk = SparkStreaming(cfg)
     consumer = Consumer(cfg)
 
-    consumer.create_socket_host()
+    host, port = consumer.create_socket_host()
+    spk.map_r(host, port)
     consumer.read_stream()
