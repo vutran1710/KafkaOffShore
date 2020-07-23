@@ -6,7 +6,7 @@ COPY . .
 
 RUN chmod +x wait-for-it.sh
 
-RUN pipenv install --deploy --system
+RUN pipenv install --system
 
 EXPOSE 8000
 
