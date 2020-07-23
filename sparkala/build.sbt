@@ -10,3 +10,6 @@ name := "learn-spark"
 version := "1.0"
 
 libraryDependencies += "org.apache.spark" % "spark-core_2.12" % "3.0.0"
+libraryDependencies += "org.apache.spark" % "spark-streaming_2.12" % "3.0.0"
+libraryDependencies += "org.apache.spark" % "spark-streaming-kafka-0-10_2.12" % "3.0.0"
+libraryDependencies += "org.apache.kafka" % "kafka-clients" % "2.5.0"
