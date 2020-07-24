@@ -1,6 +1,16 @@
 version: '3.6'
 
 services:
+  couchdb:
+    image: couchdb:latest
+    environment:
+      COUCHDB_USER: "admin"
+      COUCHDB_PASSWORD: "1234abc"
+    ports:
+      - 5984:5984
+    volumes:
+      - ./.persist/couchdb:/opt/couchdb/data
+
   zookeeper:
     image: bitnami/zookeeper:latest
     container_name: kos_zookeper
@@ -11,8 +21,6 @@ services:
     image: bitnami/kafka:2.5.0
     depends_on:
       - zookeeper
-    ports:
-      - 9092-9093:9092
     environment:
       - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
       - ALLOW_PLAINTEXT_LISTENER=yes
@@ -47,6 +55,20 @@ services:
       - STAGE=PRODUCTION
     ports:
       - 8000:8000
+
+  kafka-consumer:
+    image: kafka-flink-consumer
+    container_name: kos_backend-consumer
+    build:
+      dockerfile: Dockerfile
+      context: ./consumer
+    depends_on:
+      - kafka-producer
+    environment:
+      - KAFKA_SERVER=kafka:9092
+      - ZOOKEEPER_SERVER=zookeeper:2181
+      - KAFKA_TOPIC=flight
+      - COUCHDB_SERVER=couchdb:5984
 
   # zeppelin:
   #   image: apache/zeppelin:0.9.0
@@ -96,17 +118,16 @@ services:
       - ./.mnt/spark-apps:/opt/spark-apps
       - ./.mnt/spark-data:/opt/spark-data
 
-  # kafka-spark-connector:
-  #   image: kafka-spark-connect
-  #   container_name: kos_kafka-spark-connector
+  # sparkala:
+  #   image: sparkala
+  #   container_name: kos_sparkala
   #   build:
   #     dockerfile: Dockerfile
-  #     context: ./spark
-  #   depends_on:
-  #     - spark-master
+  #     context: ./sparkala
   #   environment:
-  #     - KAFKA_TOPIC=flight
-  #     - KAFKA_SERVER=kafka:9092
-  #     - SPARK_APP_NAME=streamapp
-  #     - SPARK_REMOTE_URL=spark://spark-master:7077
-  #     - LOG_LEVEL=10
+  #     - SPARK_URL=spark://spark-master:7077
+  #     - ZOOKEEPER_URL=zookeeper:2181
+  #   depends_on:
+  #     - zookeeper
+  #     - spark-master
+  #     - kafka

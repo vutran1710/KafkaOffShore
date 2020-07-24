@@ -12,12 +12,12 @@ KAFKA_TOPIC = getenv('KAFKA_TOPIC')
 logs.info('Hostname: %s', str(HOSTNAME))
 logs.info('=====> Kafka Servers: %s', str(KAFKA_SERVER))
 
-couchdb_server = getenv('COUCHDB_SERVER')
-user, pwd = 'admin', '1234abc'
-url = 'http://{}'.format(couchdb_server)
-client = CouchDB(user, pwd, url=url, connect=True)
-db_name = 'flightdb'
-db = client.get(db_name, None) or client.create_database(db_name)
+# couchdb_server = getenv('COUCHDB_SERVER')
+# user, pwd = 'admin', '1234abc'
+# url = 'http://{}'.format(couchdb_server)
+# client = CouchDB(user, pwd, url=url, connect=True)
+# db_name = 'flightdb'
+# db = client.get(db_name, None) or client.create_database(db_name)
 
 # continuous loop
 while True:
@@ -58,7 +58,7 @@ while True:
             "timestamp": int(datetime.now().strftime('%s')),
         }
 
-        record = db.create_document(new_document)
-        logs.info('New doc: %s, ---- at timestamp: %s', record['_id'],
-                  record['timestamp'])
-        time.sleep(1.5)
+        # record = db.create_document(new_document)
+        # logs.info('New doc: %s, ---- at timestamp: %s', record['_id'],
+        #           record['timestamp'])
+        # time.sleep(1.5)
