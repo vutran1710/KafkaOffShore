@@ -32,3 +32,4 @@ project/boot/
 project/plugins/project/
 .kafka-persistence/
 .persist/
+checkpoints/
