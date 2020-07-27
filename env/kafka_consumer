@@ -1,0 +1,5 @@
+# kafka_consumer
+KAFKA_SERVER=kafka:9092
+ZOOKEEPER_SERVER=zookeeper:2181
+KAFKA_TOPIC=flight
+COUCHDB_SERVER=couchdb:5984

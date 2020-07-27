@@ -1,0 +1,3 @@
+# zeppelin
+ZEPPELIN_LOG_DIR=/logs
+ZEPPELIN_NOTEBOOK_DIR=/notebook
