@@ -19,7 +19,7 @@ import org.apache.spark.streaming.kafka010._
 object StreamJob extends App {
   println("Hello, run spark,.....")
   // val Array(brokers, groupId, topics) = args
-  val brokers = "zookeeper:2181"
+  val brokers = "kafka:9092,kafka:9093"
   val groupId = "any-id"
 
   // Create context with 2 second batch interval

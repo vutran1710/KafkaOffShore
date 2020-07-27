@@ -35,3 +35,6 @@ producer_dev:
 
 add_cors_couch:
 	npx add-cors-to-couchdb http://localhost:5984 -u admin -p 1234abc
+
+build_job:
+	rm -rf sparkala/target/ && cd sparkala/ && sbt assembly
