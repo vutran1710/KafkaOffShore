@@ -16,7 +16,7 @@ export default class UserApp extends React.Component<{}, AppState> {
     this.state = {
       loading: false,
       hitCount: 0,
-      buttonText: "com' heree!",
+      buttonText: "request here!",
       count: 1,
     }
   }
@@ -38,7 +38,7 @@ export default class UserApp extends React.Component<{}, AppState> {
         .then(() => {
           this.setState({
             loading: false,
-            buttonText: "com' heree!"
+            buttonText: "request here!"
           })
         })
         .catch(() => {
@@ -86,7 +86,7 @@ export default class UserApp extends React.Component<{}, AppState> {
                 className={`button ${loading && 'button--disabled'}`}
                 onClick={this.requestSendIntegerStream}
                 onMouseEnter={this.changeText('send Kafka request?')}
-                onMouseLeave={this.changeText("com' heree!")}
+                onMouseLeave={this.changeText("request here!")}
               >
                 {buttonText}
               </a>
@@ -94,7 +94,12 @@ export default class UserApp extends React.Component<{}, AppState> {
 
           </div>
         </div>
-        <input value={count} onChange={this.setCount} className="request-count-input" />
+        <div>
+          <input value={count} onChange={this.setCount} className="request-count-input" />
+          <small className="hint">
+            change the number of streaming integer here...
+          </small>
+        </div>
       </React.Fragment>
     )
   }

@@ -111,7 +111,6 @@ Considering what to add to complete the Architechture
 - [x] Developing **Producer Backend API**
 - [x] Add **Spark** to consumer, connect to **Kafka** for streaming
 - [x] Scale Consumer
-- [ ] Setup CouchDB Cluster
 - [x] Scale Kafka Broker and Spark Worker
 - [ ] Apache Beam?
 - [ ] Apache Avro
