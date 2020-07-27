@@ -1,0 +1,170 @@
+@import url('https://fonts.googleapis.com/css?family=Heebo:300,400,700,900&display=swap');
+
+$std-spacing: 20px;
+$base-bg: #f1f4f7;
+$upper-bg: white;
+$border-rad: 2px;
+
+body {
+  background: $base-bg;
+  font-family: 'Heebo', sans-serif;
+  font-size: 12px;
+  margin: 0;
+  padding: 0;
+  color: #555;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@mixin drop-shadow {
+  box-shadow: 0px 0px 30px 5px rgba(10,0,10,0.1);
+}
+
+.app-container {
+  width: 100%;
+}
+
+.header {
+  @include drop-shadow;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: $upper-bg;
+  margin-bottom: $std-spacing;
+}
+
+.page-title {
+  margin: $std-spacing;
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+
+  .neko {
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 40px;
+    padding: 10px;
+    border-radius: 50%;
+    border: solid 2px black;
+    margin-right: $std-spacing;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+.legends {
+  width: auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.legends-item {
+  position: relative;
+  display: flex;
+  width: auto;
+  margin: $std-spacing;
+}
+
+.legends-color {
+  width: 15px;
+  height: 15px;
+  margin-right: $std-spacing;
+}
+
+.legends-text {
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.empty-notif {
+  text-shadow: #fff 1px 1px 0;
+  text-align: center;
+}
+
+.container {
+  @include drop-shadow;
+  background: $upper-bg;
+  padding: $std-spacing;
+  border-radius: $border-rad;
+  margin: $std-spacing;
+}
+
+.container-header {
+  margin-bottom: $std-spacing;
+  font-weight: 700;
+  font-size: 1rem;
+  opacity: .6;
+  width: 100%;
+}
+
+.flex {
+  display: flex;
+  width: auto;
+  flex-direction: row;
+  flex-flow: wrap;
+  align-items: flex-start;
+
+  &.flex-column {
+    flex-direction: column;
+  }
+}
+
+.flex-container {
+  display: flex;
+}
+
+.flex-item {
+  display: flex;
+  width: auto;
+}
+
+.w_50 { width: 50%; }
+.w_100 { width: 100%; }
+
+.distribution-container {
+}
+
+.chart-container {
+  margin-bottom: $std-spacing;
+  width: calc(100% - #{2 * $std-spacing});
+}
+
+.doc--container {
+  align-items: flex-start;
+  display: flex;
+}
+
+.doc {
+  width: 17px;
+  height: 17px;
+  margin: 3px;
+}
+
+.bg-red {
+  background: rgba(255, 99, 132, 0.8);
+}
+
+.bg-yellow {
+  background: rgba(255, 185, 86, 0.8);
+}
+
+.bg-green {
+  background: rgba(75, 222, 132, 0.8);
+}
+
+.bg-blue {
+  background: rgba(54, 162, 235, 0.8);
+}
+
+.bg-purple {
+  background: rgba(153, 102, 255, 0.8);
+}
