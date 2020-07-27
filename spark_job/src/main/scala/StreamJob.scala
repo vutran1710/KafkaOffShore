@@ -16,7 +16,6 @@ import org.apache.log4j.{LogManager, Logger}
  * $ bin/run-example streaming.DirectKafkaWordCount broker1-host:port,broker2-host:port \
  * consumer-group topic1,topic2
  */
-//class StreamJob()
 
 object StreamJob  {
   var log: Logger = LogManager.getLogger(this.getClass.getName)
@@ -26,7 +25,6 @@ object StreamJob  {
   }
 
   def runApp(topic: String): Unit = {
-    // val Array(brokers, groupId, topics) = args
     val brokers = "kafka:9092,kafka:9093"
     val groupId = "any-id"
 
@@ -62,7 +60,6 @@ object StreamJob  {
       })
     })
 
-    // Start the computation
     ssc.start()
     ssc.awaitTermination()
   }

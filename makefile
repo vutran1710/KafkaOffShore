@@ -4,11 +4,9 @@ setup:
 	cd ..
 	cd admin_app && npm i
 	cd ..
-	cd producer && pipenv install
+	cd producer && pipenv install --dev
 	cd ..
-	cd consumer && pipenv install
-	cd ..
-	cd spark && pipenv install
+	cd consumer && pipenv install --dev
 	cd ..
 	echo "===== Getting dockerization"
 	docker-compose up -d --build
@@ -37,4 +35,4 @@ add_cors_couch:
 	npx add-cors-to-couchdb http://localhost:5984 -u admin -p 1234abc
 
 build_job:
-	rm -rf sparkala/target/ && cd sparkala/ && sbt assembly
+	rm -rf spark_job/target/ && cd spark_job/ && sbt assembly
