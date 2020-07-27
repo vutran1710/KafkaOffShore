@@ -127,7 +127,7 @@ services:
     environment:
       - REMOTE_SPARK=spark://spark-master:7077
     volumes:
-      - ./sparkala/target/scala-2.12:/tmp/jobs
+      - ./spark_job/target/scala-2.12:/tmp/jobs
     command: >
       sh -c "cd /tmp/jobs && ls &&
              spark-submit --class StreamJob --master spark://spark-master:7077 --deploy-mode client stream-job.jar"
