@@ -79,10 +79,10 @@ services:
       ZEPPELIN_LOG_DIR: /logs
       ZEPPELIN_NOTEBOOK_DIR: /notebook
     volumes:
-      - ./.tmp/logs:/logs
-      - ./.data/kafka-poc/zeppelin/notebook:/notebook
-      - ./.data/kafka-poc/zeppelin/conf:/zeppelin/conf
-      - ./.data/kafka-poc/kafka-data:/data/kafka-poc/kafka-data
+      - ./.persist/.tmp/logs:/logs
+      - ./.persist/kafka-poc/zeppelin/notebook:/notebook
+      - ./.persist/kafka-poc/zeppelin/conf:/zeppelin/conf
+      - ./.persist/kafka-poc/kafka-data:/data/kafka-poc/kafka-data
 
   spark-master:
     image: bitnami/spark:3
@@ -118,8 +118,8 @@ services:
     ports:
       - 8081-8082:8081
     volumes:
-      - ./.mnt/spark-apps:/opt/spark-apps
-      - ./.mnt/spark-data:/opt/spark-data
+      - ./.persist/.mnt/spark-apps:/opt/spark-apps
+      - ./.persist/.mnt/spark-data:/opt/spark-data
 
   spark-job:
     image: bitnami/spark:3
