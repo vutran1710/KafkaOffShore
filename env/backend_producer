@@ -1,0 +1,6 @@
+# backend_producer
+KAFKA_SERVER=kafka:9092
+ZOOKEEPER_SERVER=zookeeper:2181
+KAFKA_TOPIC=flight
+LOG_LEVEL=10
+STAGE=PRODUCTION

@@ -1,107 +1,101 @@
 version: '3.6'
 
 networks:
-  bridge:
-    driver: bridge
+  default:
+    external:
+      name: kafka_offshore
 
 services:
   couchdb:
     image: couchdb:latest
-    environment:
-      COUCHDB_USER: "admin"
-      COUCHDB_PASSWORD: "1234abc"
     ports:
       - 5984:5984
     volumes:
-      - ./.couchdb/data:/opt/couchdb/data
-    networks:
-      - bridge
+      - ./.persist/couchdb:/opt/couchdb/data
+    env_file:
+     - ./env/couchdb
 
   zookeeper:
-    depends_on:
-      - couchdb
-    image: confluentinc/cp-zookeeper:latest
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 32181
-      ZOOKEEPER_TICK_TIME: 2000
-    networks:
-      bridge:
-        aliases:
-          - zookeeper
+    image: bitnami/zookeeper:latest
+    container_name: kos_zookeper
+    env_file:
+     - ./env/zookeeper
 
   kafka:
-    image: wurstmeister/kafka:latest
+    image: bitnami/kafka:2.5.0
     depends_on:
       - zookeeper
-    environment:
-      KAFKA_ADVERTISED_HOST_NAME: 0.0.0.0
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:32181
-      HOSTNAME_COMMAND: "docker info | grep ^Name: | cut -d' ' -f 2"
-      # KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
-      # KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
-      # KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
-      # KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
-      KAFKA_CREATE_TOPICS: "flight:1:1"
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://_{HOSTNAME_COMMAND}:9092
-      JMX_PORT: 9999
-    networks:
-      bridge:
-        aliases:
-          - kafka
+    env_file:
+     - ./env/kafka
 
-  kafka-manager:
-    image: sheepkiller/kafka-manager:latest
-    environment:
-      ZK_HOSTS: "zookeeper:32181"
+  cmak:
+    image: hlebalbau/kafka-manager:stable
+    container_name: kos_cmak
+    depends_on:
+      - zookeeper
     ports:
       - 9000:9000
-    networks:
-      - bridge
+    command: -Dpidfile.path=/dev/null
+    env_file:
+     - ./env/cmak
 
-  # kafka-producer:
-  #   image: kafka-flink-producer
-  #   build:
-  #     dockerfile: Dockerfile
-  #     context: ./producer
-  #   depends_on:
-  #     - kafka
-  #   environment:
-  #     KAFKA_SERVER: "kafka:9092"
-  #     ZOOKEEPER_SERVER: "zookeeper:32181"
-  #     KAFKA_TOPIC: "flight"
-  #     PRODUCER_INTERVAL: 10
-  #   ports:
-  #     - 8080:8080
-  #   networks:
-  #     - bridge
+  kafka-producer:
+    image: kafka-fastapi-producer
+    container_name: kos_backend-producer
+    build:
+      dockerfile: Dockerfile
+      context: ./producer
+    depends_on:
+      - kafka
+    ports:
+      - 8000:8000
+    env_file:
+     - ./env/backend_producer
 
-  # kafka-consumer:
-  #   image: kafka-flink-consumer
-  #   build:
-  #     dockerfile: Dockerfile
-  #     context: ./consumer
-  #   depends_on:
-  #     - kafka-producer
-  #   environment:
-  #     KAFKA_SERVER: "kafka:9092"
-  #     ZOOKEEPER_SERVER: "zookeeper:32181"
-  #     KAFKA_TOPIC: "flight"
-  #     COUCHDB_SERVER: "couchdb:5984"
-  #   networks:
-  #     - bridge
+  kafka-consumer:
+    image: kafka-simple-consumer
+    container_name: kos_backend-consumer
+    build:
+      dockerfile: Dockerfile
+      context: ./consumer
+    depends_on:
+      - kafka-producer
+    env_file:
+      - ./env/kafka_consumer
+
+  zeppelin:
+    image: apache/zeppelin:0.9.0
+    container_name: kos_zeppelin
+    ports:
+      - 8079:8080
+    volumes:
+      - ./.persist/.tmp/logs:/logs
+      - ./.persist/kafka-poc/zeppelin/notebook:/notebook
+      - ./.persist/kafka-poc/zeppelin/conf:/zeppelin/conf
+      - ./.persist/kafka-poc/kafka-data:/data/kafka-poc/kafka-data
+    env_file:
+      - ./env/zeppelin
 
   spark-master:
-    image: bitnami/spark:latest
+    image: bitnami/spark:3
+    container_name: kos_spark-master
+    depends_on:
+      - zookeeper
+      - kafka-producer
     ports:
-      - "8080:8080"
-      - "7077:7077"
+      - 8080:8080
+      - 7077:7077
+    env_file:
+      - ./env/spark_master
 
   spark-worker:
-    image: bitnami/spark:latest
+    image: bitnami/spark:3
+    depends_on:
+      - spark-master
     ports:
-      - "8081-8083:8081"
-    environment:
-      - SPARK_MODE=worker
-      - SPARK_MASTER_URL=spark://spark-master:7077
-      - SPARK_WORKER_MEMORY=1G
-      - SPARK_WORKER_CORES=1
+      - 8081-8082:8081
+    volumes:
+      - ./.persist/spark-worker:/opt/spark-apps
+      - ./.persist/spark-worker-data:/opt/spark-data
+    env_file:
+      - ./env/spark_worker
