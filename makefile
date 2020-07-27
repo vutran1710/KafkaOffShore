@@ -12,7 +12,9 @@ setup:
 	docker network create kafka_offshore
 
 up-scale:
-	docker-compose up -d --force-recreate --build --scale kafka=$(n) --scale spark-worker=$(n)
+# Compose up with shortcut to scale more brokers and/or spark-worker
+# eg: make up-scale k=2 s=3
+	docker-compose up -d --force-recreate --build --scale kafka=$(k) --scale spark-worker=$(s)
 
 fe_user:
 	echo "Running User Application to interact with Producer Backend API"
