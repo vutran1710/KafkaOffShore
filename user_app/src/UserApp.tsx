@@ -32,7 +32,7 @@ export default class UserApp extends React.Component<{}, AppState> {
         buttonText: 'Sent!'
       })
 
-      wretch('http://localhost:8080/api/stream_int').query({ count: this.state.count || 1 })
+      wretch('http://localhost:8000/stream-int').query({ count: this.state.count || 1 })
         .put()
         .res()
         .then(() => {
