@@ -1,43 +1,58 @@
-import utils.Context
-import org.apache.kafka.clients.consumer.ConsumerRecord
+import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.kafka.common.serialization.StringDeserializer
-import org.apache.spark.streaming.{Seconds, StreamingContext}
+
+import org.apache.spark.SparkConf
+import org.apache.spark.streaming._
 import org.apache.spark.streaming.kafka010._
-import org.apache.spark.streaming.kafka010.LocationStrategies.PreferConsistent
-import org.apache.spark.streaming.kafka010.ConsumerStrategies.Subscribe
 
+/**
+ * Consumes messages from one or more topics in Kafka and does wordcount.
+ * Usage: DirectKafkaWordCount <brokers> <topics>
+ *   <brokers> is a list of one or more Kafka brokers
+ *   <groupId> is a consumer group name to consume from topics
+ *   <topics> is a list of one or more kafka topics to consume from
+ *
+ * Example:
+ *    $ bin/run-example streaming.DirectKafkaWordCount broker1-host:port,broker2-host:port \
+ *    consumer-group topic1,topic2
+ */
+object StreamJob extends App {
+  println("Hello, run spark,.....")
+  // val Array(brokers, groupId, topics) = args
+  val brokers = "zookeeper:2181"
+  val groupId = "any-id"
 
+  // Create context with 2 second batch interval
+  val sparkConf = new SparkConf()
+    .setAppName("StreamJob")
+    .set("spark.executor.memory", "512m")
+    .set("spark.executor.cores", "1")
 
-object Sparkling extends App with Context {
+  val ssc = new StreamingContext(sparkConf, Seconds(2))
 
-  val streamingContext = new StreamingContext(sctx, Seconds(1))
-
-  streamingContext.checkpoint("~/checkpoints")
-
+  // Create direct kafka stream with brokers and topics
+  val topicsSet = Set("flight")
   val kafkaParams = Map[String, Object](
-    "bootstrap.servers" -> "172.21.0.4:9092,172.21.0.6:9092",
-    "key.deserializer" -> classOf[StringDeserializer],
-    "value.deserializer" -> classOf[StringDeserializer],
-    "group.id" -> "use_a_separate_group_id_for_each_stream",
-    "auto.offset.reset" -> "latest",
-    "enable.auto.commit" -> (false: java.lang.Boolean)
+    ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG -> brokers,
+    ConsumerConfig.GROUP_ID_CONFIG -> groupId,
+    ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG -> classOf[StringDeserializer],
+    ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG -> classOf[StringDeserializer],
   )
 
-  val topics = Array("flight")
-  val stream = KafkaUtils.createDirectStream[String, String](
-    streamingContext,
-    PreferConsistent,
-    Subscribe[String, String](topics, kafkaParams)
+  val messages = KafkaUtils.createDirectStream[String, String](
+    ssc,
+    LocationStrategies.PreferConsistent,
+    ConsumerStrategies.Subscribe[String, String](topicsSet, kafkaParams),
   )
 
-  stream.map(record => {
-    println(s"record = $record")
-    (record.key, record.value)
-  }).foreachRDD(rdd => {
-    println(s"rd = $rdd")
-    rdd.foreach(s => println(s">>>>>>>>>>>>>>>>> haha = $s"))
-  })
+  // Get the lines, split them into words, count the words and print
+  val lines = messages.map(_.value)
+  // val words = lines.flatMap(_.split(" "))
+  // val wordCounts = words.map(x => (x, 1L)).reduceByKey(_ + _)
+  lines.print()
 
-  streamingContext.start()
-  streamingContext.awaitTermination()
+  // Start the computation
+  ssc.start()
+  ssc.awaitTermination()
 }
+// scalastyle:on println
