@@ -35,11 +35,12 @@ class KafkaClient(metaclass=Singleton):
         log.warning("Too many retries. Exiting....")
         raise SystemExit
 
-    def send(self, data: dict):
+    def send(self, data: int):
         """ send data to kafka
         """
-        num_bytes = bytes(str(data), encoding="utf-8")
-        kwargs = {"value": num_bytes, "key": num_bytes}
+        byte_value = bytes(str(data), encoding="utf-8") 
+        byte_key = bytes("number", encoding="utf-8") 
+        kwargs = {"value": byte_value, "key": byte_key}
         (
             self._p.send(self._cfg.KAFKA_TOPIC, **kwargs)
             .add_callback(self.on_send_success)

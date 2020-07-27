@@ -17,7 +17,7 @@ async def get_user_feed(count: int = 0):
 
     counter = 0
     while counter < count:
-        producer.send({"number": counter})
+        producer.send(counter)
         log.debug("having sent >> %s", counter)
         counter += 1
         sleep(0.1)
