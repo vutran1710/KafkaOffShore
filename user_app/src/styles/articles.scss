@@ -1,0 +1,14 @@
+.article-container--post {
+  border-bottom: dashed 1px #ddd;
+  min-height: 400px;
+}
+
+.article-container--post__header {
+  margin: 10px 5px;
+  font-style: italic;
+}
+
+.article-container--post__body--content {
+  opacity: .7;
+  padding-right: 5px;
+}

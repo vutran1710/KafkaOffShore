@@ -30,5 +30,13 @@ export default [
   {
     id: 8,
     content: "So much the worse for those who fear wine, for it is because they have bad thoughts which they are afraid the liquor will extract from their hearts…The wicked are great drinkers of water; As the flood proved once for all"
+  },
+  {
+    id: 9,
+    content: "withRouter does not subscribe to location changes like React Redux’s connect does for state changes. Instead, re-renders after location changes propagate out from the <Router> component. This means that withRouter does not re-render on route transitions unless its parent component re-renders.Static Methods and PropertiesAll non-react specific static methods and properties of the wrapped component are automatically copied to the \"connected\" component."
+  },
+  {
+    id: 10,
+    content: "There are two fundamental attributes of data stream processing. First, each and every record in the system must have a timestamp, which in 99% of cases is the time at which the data were created. Second, each and every record is processed as it arrives. These two attributes ensure a system that can react to the contents of every record, and can correlate across multiple records over time, even down to millisecond latency. In contrast, approaches such as Spark Streaming process data streams in batches, where each batch contains a collection of events that arrived over the batch period (regardless of when the data were actually created). This is fine for some applications such as simple counts and ETL into Hadoop, but the lack of true record-by-record processes makes stream processing and time-series analytics impossible."
   }
 ]

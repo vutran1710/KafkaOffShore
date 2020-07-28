@@ -34,7 +34,6 @@ const frontendServe = () => {
   fuse.dev({ hmr: true, port: 3001 })
   const bundle = fuse
     .bundle('dist/bundle')
-    .watch('src/*.(ts|tsx|scss)')
     .watch('src/**/*.(ts|tsx|scss)')
     .hmr()
   bundle.instructions('> src/index.tsx')

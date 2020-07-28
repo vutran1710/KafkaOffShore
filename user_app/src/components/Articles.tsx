@@ -1,9 +1,14 @@
 import React from 'react'
-import posts from '../article_data'
+import posts from '../utils/article_data'
 
 type AppState = {
   cursorPosition: number;
   readTime: number;
+}
+
+type Post = {
+  id: number;
+  content: string;
 }
 
 export default class Articles extends React.Component<{}, AppState> {
@@ -16,10 +21,10 @@ export default class Articles extends React.Component<{}, AppState> {
     const { cursorPosition, readTime } = this.state
     return (
       <div className="article-container">
-        {posts.map(p => (
+        {posts.map((p: Post) => (
           <div className="article-container--post article-container--post__container" key={p.id}>
             <div className="article-container--post__header">
-              #id = {p.id}
+              #{p.id}
             </div>
             <div className="article-container--post__body">
               <p className="article-container--post__body--content">

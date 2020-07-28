@@ -1,5 +1,5 @@
 import React from 'react'
-import * as ApiClient from '../ApiClient'
+import * as ApiClient from '../utils/ApiClient'
 
 
 export default class StreamForm extends React.Component {
