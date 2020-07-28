@@ -15,7 +15,7 @@ object StreamJob  {
 
   def runApp(topic: String): Unit = {
     val brokers = "kafka:9092,kafka:9093"
-    val groupId = "any-id"
+    val groupId = "spark_consumer"
 
     // Create context with 2 second batch interval
     val sparkConf = new SparkConf()
