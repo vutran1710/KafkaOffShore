@@ -4,10 +4,11 @@ import {
   Route,
   Switch,
 } from 'react-router-dom'
-import Articles from './Components/Articles'
-import KafkaBook from './Components/KafkaBook'
-import Bookmarker from './Components/Bookmarker'
-import StreamForm from './Components/StreamForm'
+import Articles from './components/Articles'
+import KafkaBook from './components/KafkaBook'
+import Bookmarker from './components/Bookmarker'
+import StreamForm from './components/StreamForm'
+import TableOfContent from './components/TableOfContent'
 
 
 const App = () => (
@@ -16,6 +17,7 @@ const App = () => (
       <div className="kafka-container--inner">
         <Switch>
           <Route path="/" exact component={KafkaBook} />
+          <Route path="/content" exact component={TableOfContent} />
           <Route path="/send-int" component={StreamForm} />
           <Route path="/read" component={Articles} />
         </Switch>
