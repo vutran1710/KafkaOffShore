@@ -2,7 +2,6 @@ import {
   FuseBox,
   ImageBase64Plugin,
   CSSPlugin,
-  QuantumPlugin,
   SassPlugin,
   WebIndexPlugin,
 } from 'fuse-box'

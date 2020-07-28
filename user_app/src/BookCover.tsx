@@ -5,7 +5,7 @@ export interface Props {
   loading: boolean;
 }
 
-const KafkaInterface = ({ loading }: Props) => {
+const BookCover = ({ loading }: Props) => {
 
   const whichImage = loading ? 'http://giphygifs.s3.amazonaws.com/media/2wZswhaUnzAti/giphy.gif' : kafka
   const kafkaImageClass = `kafka-image ${loading ? 'kafka-image__dark' : ''}`
@@ -25,4 +25,4 @@ const KafkaInterface = ({ loading }: Props) => {
   )
 }
 
-export default KafkaInterface
+export default BookCover

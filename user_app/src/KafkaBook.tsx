@@ -1,7 +1,6 @@
 import React from 'react'
-import wretch from 'wretch'
-import KafkaInterface from './KafkaInterface'
-import './style.scss'
+import BookCover from './BookCover'
+import * as ApiClient from './ApiClient'
 
 type AppState = {
   loading: boolean;
@@ -10,14 +9,14 @@ type AppState = {
   count: number;
 }
 
-export default class UserApp extends React.Component<{}, AppState> {
+export default class KafkaBook extends React.Component<{}, AppState> {
   constructor(props: {}) {
     super(props)
     this.state = {
       loading: false,
       hitCount: 0,
       buttonText: "request here!",
-      count: 1,
+      count: 0,
     }
   }
 
@@ -32,21 +31,17 @@ export default class UserApp extends React.Component<{}, AppState> {
         buttonText: 'Sent!'
       })
 
-      wretch('http://localhost:8000/stream-int').query({ count: this.state.count || 1 })
-        .put()
-        .res()
-        .then(() => {
-          this.setState({
-            loading: false,
-            buttonText: "request here!"
-          })
-        })
-        .catch(() => {
-          this.setState({
-            loading: false,
-            buttonText: "Kafka is not alive..."
-          })
-        })
+      const onOk = () => this.setState({
+        loading: false,
+        buttonText: "request here!",
+      })
+
+      const onErr = () => this.setState({
+        loading: false,
+        buttonText: "Kafka is not alive..."
+      })
+
+      ApiClient.streamNumber(this.state.count, onOk, onErr)
 
     }, 1000)
   }
@@ -59,7 +54,8 @@ export default class UserApp extends React.Component<{}, AppState> {
 
   setCount = (e: React.FormEvent<EventTarget>): void => {
     const target = e.target as HTMLInputElement
-    this.setState({ count: parseInt(target.value || '0', 10) })
+    const count = parseInt(target.value, 10)
+    this.setState({ count })
   }
 
   render() {
@@ -78,7 +74,7 @@ export default class UserApp extends React.Component<{}, AppState> {
             <div>haruki murakami</div>
           </div>
           <div className="info-container">
-            <KafkaInterface loading={loading} />
+            <BookCover loading={loading} />
           </div>
           <div className="footer">
             <div className="text--center">
@@ -95,10 +91,12 @@ export default class UserApp extends React.Component<{}, AppState> {
           </div>
         </div>
         <div>
-          <input value={count} onChange={this.setCount} className="request-count-input" />
-          <small className="hint">
-            change the number of streaming integer here...
-          </small>
+          <input
+            value={count}
+            onChange={this.setCount}
+            className="request-count-input"
+            type="number"
+          />
         </div>
       </React.Fragment>
     )
