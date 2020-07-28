@@ -4,9 +4,10 @@ import {
   Route,
   Switch,
 } from 'react-router-dom'
-import Articles from './Articles'
-import KafkaBook from './KafkaBook'
-import Bookmarker from './Bookmarker'
+import Articles from './Components/Articles'
+import KafkaBook from './Components/KafkaBook'
+import Bookmarker from './Components/Bookmarker'
+import StreamForm from './Components/StreamForm'
 import './style.scss'
 
 
@@ -16,16 +17,11 @@ const App = () => (
       <div className="kafka-container--inner">
         <Switch>
           <Route path="/" exact component={KafkaBook} />
+          <Route path="/send-int" component={StreamForm} />
           <Route path="/read" component={Articles} />
         </Switch>
       </div>
       <Bookmarker />
-    </div>
-    <div>
-      <input
-        className="request-count-input"
-        type="number"
-      />
     </div>
   </Router>
 )

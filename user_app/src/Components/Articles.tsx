@@ -1,5 +1,5 @@
 import React from 'react'
-import posts from './article_data'
+import posts from '../article_data'
 
 type AppState = {
   cursorPosition: number;

@@ -1,5 +1,5 @@
 import React from 'react'
-import * as kafka from './kafka.png'
+import * as kafka from '../assets/kafka.png'
 
 export interface Props {
   loading: boolean;
@@ -16,7 +16,11 @@ const BookCover = ({ loading }: Props) => {
         <img src={whichImage} height="120" width="120" />
       </div>
       <div className="title--main">
-        <span>K</span><span>A</span><span>F</span><span>K</span><span>A</span>
+        <span>K</span>
+        <span>A</span>
+        <span>F</span>
+        <span>K</span>
+        <span>A</span>
       </div>
       <div className="title--sub">
         OFF THE SHORE
