@@ -9,7 +9,7 @@ from pydantic import BaseModel
 
 class AppConfig(BaseModel):
     """Config Model
-    - all keys are required
+    - all keys are required, unless specified `Optional`
     """
 
     KAFKA_TOPIC: str
