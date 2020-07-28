@@ -67,6 +67,11 @@ body {
   border-radius: 0 15px 15px 0;
 }
 
+.kafka-container--inner {
+  height: calc(100% - 3px);
+  overflow: scroll;
+}
+
 .kafka-image {
   display: flex;
   justify-content: center;
@@ -184,4 +189,10 @@ body {
     border-color: #e7595a;
     border-right-color: transparent;
   }
+}
+
+.article-container--post__body--content {
+  color: #485052;
+  font-family: 'Noto Serif', serif;
+  font-size: 11pt;
 }

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import BookCover from './BookCover'
 import * as ApiClient from './ApiClient'
 
@@ -68,35 +69,24 @@ export default class KafkaBook extends React.Component<{}, AppState> {
 
     return (
       <React.Fragment>
-        <div className="kafka-container">
-          <div className="author">
-            <div>inspired by</div>
-            <div>haruki murakami</div>
-          </div>
-          <div className="info-container">
-            <BookCover loading={loading} />
-          </div>
-          <div className="footer">
-            <div className="text--center">
-              <a
-                className={`button ${loading && 'button--disabled'}`}
-                onClick={this.requestSendIntegerStream}
-                onMouseEnter={this.changeText('send Kafka request?')}
-                onMouseLeave={this.changeText("request here!")}
-              >
-                {buttonText}
-              </a>
-            </div>
-          </div>
-          <div className="bookmarker" />
+        <div className="author">
+          <div>inspired by</div>
+          <div>haruki murakami</div>
         </div>
-        <div>
-          <input
-            value={count}
-            onChange={this.setCount}
-            className="request-count-input"
-            type="number"
-          />
+        <div className="info-container">
+          <BookCover loading={loading} />
+        </div>
+        <div className="footer">
+          <div className="text--center">
+            <a
+              className={`button ${loading && 'button--disabled'}`}
+              onClick={this.requestSendIntegerStream}
+              onMouseEnter={this.changeText('send Kafka request?')}
+              onMouseLeave={this.changeText("request here!")}
+            >
+              {buttonText}
+            </a>
+          </div>
         </div>
       </React.Fragment>
     )
