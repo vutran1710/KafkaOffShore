@@ -87,8 +87,8 @@ export default class KafkaBook extends React.Component<{}, AppState> {
                 {buttonText}
               </a>
             </div>
-
           </div>
+          <div className="bookmarker" />
         </div>
         <div>
           <input

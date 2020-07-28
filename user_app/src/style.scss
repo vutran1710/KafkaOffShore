@@ -165,3 +165,23 @@ body {
   color: gray;
   width: 50px;
 }
+
+.bookmarker {
+  height: 0px;
+  width: 13px;
+  background-color: transparent;
+  position: absolute;
+  top: 48px;
+  right: -45px;
+  border: solid 17px #B13A22;
+  border-right: solid 15px transparent;
+  transition: all 0.2s;
+  cursor: pointer;
+
+  &:hover {
+    width: 20px;
+    transform: translate(7px);
+    border-color: #e7595a;
+    border-right-color: transparent;
+  }
+}
