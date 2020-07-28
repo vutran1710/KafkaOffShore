@@ -33,6 +33,7 @@ services:
     container_name: kos_cmak
     depends_on:
       - zookeeper
+      - kafka
     ports:
       - 9000:9000
     command: -Dpidfile.path=/dev/null
@@ -84,7 +85,6 @@ services:
       - kafka-producer
     ports:
       - 8080:8080
-      - 7077:7077
     env_file:
       - ./env/spark_master
 
