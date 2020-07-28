@@ -8,7 +8,6 @@ import Articles from './Components/Articles'
 import KafkaBook from './Components/KafkaBook'
 import Bookmarker from './Components/Bookmarker'
 import StreamForm from './Components/StreamForm'
-import './style.scss'
 
 
 const App = () => (
