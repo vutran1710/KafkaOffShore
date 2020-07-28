@@ -112,6 +112,8 @@ Considering what to add to complete the Architechture
 - [x] Add **Spark** to consumer, connect to **Kafka** for streaming
 - [x] Scale Consumer
 - [x] Scale Kafka Broker and Spark Worker
+- [ ] Use gRPC for backend-producer
+- [ ] Store calculated data from Spark to CouchDB
 - [ ] Apache Beam?
 - [ ] Apache Avro
 - [ ] KSQL?
