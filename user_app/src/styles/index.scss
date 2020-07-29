@@ -6,6 +6,10 @@ body {
   font-family: 'Noto Serif', serif;
 }
 
+a {
+  text-decoration: none !important;
+}
+
 .author {
   color: #bbb;
   font-size: 10px;
@@ -16,7 +20,7 @@ body {
   text-transform: uppercase;
 }
 
-.button {
+.author-signature {
   display: inline-block;
   color: #838383;
   padding: 10px 20px;
@@ -31,26 +35,10 @@ body {
   text-decoration: none;
 }
 
-.button:hover {
+.author-signature:hover {
   color: #d09e54;
   transition: color 1s, font-size .5s;
   font-size: 26px;
-}
-
-.button--disabled {
-  transition: color 1s, font-size .5s;
-  color: #e65a5a;
-  cursor: text;
-  font-size: 25px;
-  &:hover {
-    font-size: 25px;
-    color: #e65a5a;
-  }
-}
-
-.button:active {
-  transition: font-size .5s;
-  font-size: 20px;
 }
 
 .kafka-container {

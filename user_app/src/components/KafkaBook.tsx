@@ -10,7 +10,7 @@ type AppState = {
 export default class KafkaBook extends React.Component<{}, AppState> {
   state = {
     loading: false,
-    buttonText: "request here!",
+    buttonText: "~ vutran ~",
   }
 
   changeText = (buttonText: string) => () => {
@@ -27,7 +27,7 @@ export default class KafkaBook extends React.Component<{}, AppState> {
     } = this.state
 
     return (
-      <React.Fragment>
+      <Link to="/content" className="cover-link-container">
         <div className="author">
           <div>inspired by</div>
           <div>haruki murakami</div>
@@ -36,16 +36,11 @@ export default class KafkaBook extends React.Component<{}, AppState> {
           <BookCover loading={loading} />
         </div>
         <div className="footer text--center">
-          <Link
-            to="/content"
-            className={`button ${loading && 'button--disabled'}`}
-            onMouseEnter={this.changeText('send Kafka request?')}
-            onMouseLeave={this.changeText("request here!")}
-          >
+          <div className="author-signature">
             {buttonText}
-          </Link>
+          </div>
         </div>
-      </React.Fragment>
+      </Link>
     )
   }
 }
