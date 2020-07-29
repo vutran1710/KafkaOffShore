@@ -140,18 +140,18 @@
         },
         "urllib3": {
             "hashes": [
-                "sha256:3018294ebefce6572a474f0604c2021e33b3fd8006ecd11d62107a5d2a963527",
-                "sha256:88206b0eb87e6d677d424843ac5209e3fb9d0190d0ee169599165ec25e9d9115"
+                "sha256:91056c15fa70756691db97756772bb1eb9678fa585d9184f24534b100dc60f4a",
+                "sha256:e7983572181f5e1522d9c98453462384ee92a0be7fac5f1413a1e35c56cc0461"
             ],
-            "version": "==1.25.9"
+            "version": "==1.25.10"
         },
         "uvicorn": {
             "hashes": [
-                "sha256:467c333c743ec6a3eb545517a0e3cac603becfa40c73c65ed46c3a4bf1c8e2d0",
-                "sha256:d19a20b17445708fd222e5a7cfc3eacfb31ac269bc8fefa4920833334e199782"
+                "sha256:1d46a22cc55a52f5567e0c66f000ae56f26263e44cef59b7c885bf10f487ce6e",
+                "sha256:b50f7f4c0c499c9b8d0280924cfbd24b90ba02456e3dc80934b9a786a291f09f"
             ],
             "index": "pypi",
-            "version": "==0.11.6"
+            "version": "==0.11.7"
         },
         "uvloop": {
             "hashes": [
@@ -283,10 +283,10 @@
         },
         "parso": {
             "hashes": [
-                "sha256:158c140fc04112dc45bca311633ae5033c2c2a7b732fa33d0955bad8152a8dd0",
-                "sha256:908e9fae2144a076d72ae4e25539143d40b8e3eafbaeae03c1bfe226f4cdf12c"
+                "sha256:97218d9159b2520ff45eb78028ba8b50d2bc61dcc062a9682666f2dc4bd331ea",
+                "sha256:caba44724b994a8a5e086460bb212abc5a8bc46951bf4a9a1210745953622eb9"
             ],
-            "version": "==0.7.0"
+            "version": "==0.7.1"
         },
         "pathspec": {
             "hashes": [
