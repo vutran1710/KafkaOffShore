@@ -5,7 +5,7 @@ const BACKEND_URL = "http://localhost:8000"
 
 const Endpoints = {
   streamInt: '/stream-int',
-  signalRead: '/signal-read',
+  readNoti: '/read-noti',
 }
 
 const req = wretch().url(BACKEND_URL)
@@ -21,3 +21,9 @@ export const streamNumber = (
   .put()
   .res(onSuccess)
   .catch(onError)
+
+export const readingNoti = (
+  tags: Array<string>,
+) => req.url(Endpoints.readNoti)
+  .query({ tags })
+  .put()

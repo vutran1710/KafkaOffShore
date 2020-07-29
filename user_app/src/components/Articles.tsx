@@ -1,11 +1,13 @@
 import React from 'react'
+import * as ApiClient from '../utils/ApiClient'
 import post_mock_data from '../utils/article_data'
 
 
 type PostData = {
   id: number
   content: string
-  image?: string
+  image: string
+  tags: string[]
 }
 
 type State = {
@@ -35,7 +37,7 @@ export default class Articles extends React.Component<Props, State> {
     // that means User is reading the in-view post
     if (this.lastScroll === this.state.scrollTop) {
       const whichPost = Math.round(this.lastScroll / 500 + 1)
-      console.log(`User is reading post: #${whichPost}`)
+      ApiClient.readingNoti([whichPost.toString()])
     } else {
       this.lastScroll = this.state.scrollTop
     }
@@ -63,8 +65,9 @@ export default class Articles extends React.Component<Props, State> {
           {(post_mock_data as Array<PostData>).map(post => (
             <div className="article-container--post article-container--post__container" key={post.id}>
               <div className="article-container--post__header">
-                ... #{post.id}
+                ... {post.id}
               </div>
+              {post.tags.map(t => <small key={t}>#{t}</small>)}
               <div className="article-container--post__body">
                 <p>{post.content}</p>
                 <div>

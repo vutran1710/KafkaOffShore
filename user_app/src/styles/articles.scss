@@ -23,6 +23,14 @@
   font-size: 20px;
 }
 
+.article-container--post__container small {
+  margin: 5px;
+  display: inline-block;
+  color: #aaa;
+  font-size: 13px;
+  font-family: 'Noto Serif', serif;
+}
+
 .article-container--post__header {
   font-style: italic;
   margin-top: 10px;
