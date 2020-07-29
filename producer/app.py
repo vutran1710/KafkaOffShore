@@ -1,3 +1,5 @@
+""" Deprecated
+"""
 import time
 from os import getenv
 from logzero import logger as logs
