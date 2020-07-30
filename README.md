@@ -1,4 +1,4 @@
-# NOTE: 
+# NOTE:
 - Still under-development.
 - Document may not be entirely correct
 - Some "moving" parts are not fully described or not even listed yet.
@@ -41,7 +41,7 @@ There are 11 components:
 ### Prerequisites:
 1. Node, Npm
 2. Make
-3. Pipenv
+3. Pyenv, Pipenv
 4. Docker
 
 

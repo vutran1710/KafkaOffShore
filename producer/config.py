@@ -26,7 +26,7 @@ class AppConfig(BaseModel):
 
     @staticmethod
     def load():
-        """Load config from init if possible
+        """Load config from ini file if possible
         For production, get config from env variables
         """
         config = {}
