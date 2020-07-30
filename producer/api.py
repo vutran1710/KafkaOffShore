@@ -21,9 +21,12 @@ async def send_integers(background_tasks: BackgroundTasks, count: int = 0):
 
 
 @router.put("/read-noti", response_model=Any)
-async def send_integers(background_tasks: BackgroundTasks, tags: str = 0):
+async def send_integers(background_tasks: BackgroundTasks, tags: str = None):
     """ send a stream of integers
     """
+    if not tags:
+        return "No tags"
+
     kkc = KafkaClient(...)
     tags = tags.split(",")
     background_tasks.add_task(send_read_noti, kkc, tags)
@@ -33,4 +36,5 @@ async def send_integers(background_tasks: BackgroundTasks, tags: str = 0):
 async def ping():
     """ health-check
     """
-    return "OK"
+    kkc = KafkaClient(...)
+    return "Ok" if kkc.is_connected() else "Waiting..."

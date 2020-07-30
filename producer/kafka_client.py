@@ -31,10 +31,15 @@ class KafkaClient(metaclass=Singleton):
                 log.info("BROKER CONNECTED")
                 return True
 
-            sleep(1)
+            sleep(10)
 
         log.warning("Too many retries. Exiting....")
         raise SystemExit
+
+    def is_connected(self) -> bool:
+        """ Confirm broker connection status
+        """
+        return bool(self._p)
 
     def send_integers(self, data: int):
         """ send stream of integers to kafka
