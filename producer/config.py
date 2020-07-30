@@ -1,5 +1,6 @@
 """ load config
 """
+from typing import List
 from os import environ
 from typing import Optional
 from configparser import ConfigParser
@@ -12,7 +13,7 @@ class AppConfig(BaseModel):
     - all keys are required, unless specified `Optional`
     """
 
-    KAFKA_TOPIC: str
+    KAFKA_TOPICS: List[str]
     KAFKA_SERVER: str
     ZOOKEEPER_SERVER: Optional[str]
     COUCHDB_SERVER: Optional[str]

@@ -1,5 +1,6 @@
 """ encapsulation of kafka-client/producer
 """
+from typing import List
 from time import sleep
 from logzero import logger as log
 from kafka import KafkaProducer
@@ -35,11 +36,23 @@ class KafkaClient(metaclass=Singleton):
         log.warning("Too many retries. Exiting....")
         raise SystemExit
 
-    def send(self, data: int):
-        """ send data to kafka
+    def send_integers(self, data: int):
+        """ send stream of integers to kafka
         """
-        byte_value = bytes(str(data), encoding="utf-8") 
-        byte_key = bytes("number", encoding="utf-8") 
+        byte_value = bytes(str(data), encoding="utf-8")
+        byte_key = bytes("number", encoding="utf-8")
+        kwargs = {"value": byte_value, "key": byte_key}
+        (
+            self._p.send(self._cfg.KAFKA_TOPIC, **kwargs)
+            .add_callback(self.on_send_success)
+            .add_errback(self.on_send_error)
+        )
+
+    def send_read_noti(self, tags: List[str]):
+        """ send read-noti to kafka
+        """
+        byte_value = bytes(",".join(tags), encoding="utf-8")
+        byte_key = bytes("read", encoding="utf-8")
         kwargs = {"value": byte_value, "key": byte_key}
         (
             self._p.send(self._cfg.KAFKA_TOPIC, **kwargs)
