@@ -1,3 +1,8 @@
+# NOTE: 
+- Still under-development.
+- Document may not be entirely correct
+- Some "moving" parts are not fully described or not even listed yet.
+
 <p align="center">
   <img width="460" height="400" src="./docs/head_ss.png">
 </p>
