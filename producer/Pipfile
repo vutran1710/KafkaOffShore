@@ -7,6 +7,7 @@ verify_ssl = true
 black = "*"
 pylint = "*"
 jedi = "*"
+rope = "*"
 
 [packages]
 kafka-python = "*"
@@ -17,12 +18,11 @@ pydantic = "*"
 uvicorn = "*"
 
 [requires]
-python_version = "3.7"
+python_version = "3.7.5"
 
 [scripts]
 dev = "uvicorn main:app --host 0.0.0.0 --reload"
 app = "uvicorn main:app --host 0.0.0.0 --port 5000"
-
 
 [pipenv]
 allow_prereleases = true

@@ -1,8 +1,7 @@
 """ load config
 """
-from typing import List
 from os import environ
-from typing import Optional
+from typing import List, Optional
 from configparser import ConfigParser
 from logzero import logger, loglevel
 from pydantic import BaseModel
@@ -18,6 +17,12 @@ class AppConfig(BaseModel):
     ZOOKEEPER_SERVER: Optional[str]
     COUCHDB_SERVER: Optional[str]
     LOG_LEVEL: int
+
+    def __init__(self, **kwargs):
+        if kwargs.get("KAFKA_TOPICS"):
+            kwargs["KAFKA_TOPICS"] = kwargs["KAFKA_TOPICS"].split(",")
+
+        super().__init__(**kwargs)
 
     @staticmethod
     def load():

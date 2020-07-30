@@ -3,7 +3,7 @@
 from typing import Any
 from time import sleep
 from fastapi import APIRouter, BackgroundTasks
-from kafka_producer import KafkaClient
+from kafka_client import KafkaClient
 from tasks import send_stream_of_int, send_read_noti
 
 

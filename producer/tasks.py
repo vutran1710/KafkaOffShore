@@ -3,7 +3,7 @@
 from typing import List
 from time import sleep
 from logzero import logger as log
-from kafka_producer import KafkaClient
+from kafka_client import KafkaClient
 
 
 def send_stream_of_int(kkc: KafkaClient, count: int):

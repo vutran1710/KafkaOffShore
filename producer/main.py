@@ -3,7 +3,7 @@
 from fastapi import FastAPI
 from config import AppConfig
 from api import router
-from kafka_producer import KafkaClient
+from kafka_client import KafkaClient
 
 
 app = FastAPI()

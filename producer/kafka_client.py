@@ -43,7 +43,7 @@ class KafkaClient(metaclass=Singleton):
         byte_key = bytes("number", encoding="utf-8")
         kwargs = {"value": byte_value, "key": byte_key}
         (
-            self._p.send(self._cfg.KAFKA_TOPIC, **kwargs)
+            self._p.send(self._cfg.KAFKA_TOPICS[0], **kwargs)
             .add_callback(self.on_send_success)
             .add_errback(self.on_send_error)
         )
@@ -55,7 +55,7 @@ class KafkaClient(metaclass=Singleton):
         byte_key = bytes("read", encoding="utf-8")
         kwargs = {"value": byte_value, "key": byte_key}
         (
-            self._p.send(self._cfg.KAFKA_TOPIC, **kwargs)
+            self._p.send(self._cfg.KAFKA_TOPICS[1], **kwargs)
             .add_callback(self.on_send_success)
             .add_errback(self.on_send_error)
         )
