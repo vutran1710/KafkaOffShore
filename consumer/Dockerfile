@@ -10,4 +10,4 @@ RUN pip install pipenv
 RUN chmod +x wait-for-it.sh
 RUN pipenv install --deploy
 
-CMD ./wait-for-it.sh -s -t 30 $ZOOKEEPER_SERVER -- ./wait-for-it.sh -s -t 30 $KAFKA_SERVER -- pipenv run app.py
+CMD ./wait-for-it.sh -s -t 30 $ZOOKEEPER_SERVER -- ./wait-for-it.sh -s -t 30 $KAFKA_SERVER -- pipenv run python app.py

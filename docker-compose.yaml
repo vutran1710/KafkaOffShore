@@ -99,3 +99,12 @@ services:
       - ./.persist/spark-worker-data:/opt/spark-data
     env_file:
       - ./env/spark_worker
+
+  job_hosting:
+    image: gists/lighttpd:latest
+    container_name: job_hosting
+    depends_on:
+      - spark-master
+    volumes:
+        - ./spark_job/target/scala-2.12:/var/www/jobs
+        - ./lighttpd:/etc/lighttpd
