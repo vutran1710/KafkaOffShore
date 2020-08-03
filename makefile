@@ -29,15 +29,21 @@ add_cors_couch:
 
 
 # The following is the command to submit the spark-job to our tiny spark custer
-spark_submit_command := spark-submit --class StreamJob \
-												--master spark://spark-master:7077 \
-												--deploy-mode client \
-												/tmp/jobs/stream-job.jar
+job_hosting_ip := "docker inspect -f \"{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}\" job_hosting"
 
-spark_docker_options := --mount type=bind,src=$$(pwd)/spark_job/target/scala-2.12,dst=/tmp/jobs \
-												--network=kafka_offshore \
-												--name spark-job
+spark_submit_command := spark-submit --deploy-mode cluster --master spark://spark-master:7077 --class StreamJob
+
+spark_docker_options := --network=kafka_offshore --name spark-job
+
+assemble_scala_code := rm -rf spark_job/target/ && cd spark_job/ && sbt assembly && cd ..
+
+spark_image = bitnami/spark:3
+
+job:
+	$(assemble_scala_code)
+	docker rm spark-job
+	docker run $(spark_docker_options) $(spark_image) $(spark_submit_command)
 
 submit_job:
-	rm -rf spark_job/target/ && cd spark_job/ && sbt assembly && cd ..
-	docker run $(spark_docker_options) bitnami/spark:3 $(spark_submit_command)
+	docker stop spark-job && docker rm spark-job
+	docker run $(spark_docker_options) $(spark_image) $(spark_submit_command) http://$$(eval $(job_hosting_ip))/jobs/stream-job.jar
