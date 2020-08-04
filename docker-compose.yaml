@@ -71,9 +71,9 @@ services:
       - 8079:8080
     volumes:
       - ./.persist/.tmp/logs:/logs
-      - ./.persist/kafka-poc/zeppelin/notebook:/notebook
-      - ./.persist/kafka-poc/zeppelin/conf:/zeppelin/conf
-      - ./.persist/kafka-poc/kafka-data:/data/kafka-poc/kafka-data
+      - ./.persist/zeppelin/notebook:/notebook
+      - ./.persist/zeppelin/conf:/zeppelin/conf
+      - ./.persist/zeppelin/kafka-data:/data/kafka-data
     env_file:
       - ./env/zeppelin
 
