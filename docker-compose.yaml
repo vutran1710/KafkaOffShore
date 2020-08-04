@@ -13,20 +13,20 @@ services:
     volumes:
       - ./.persist/couchdb:/opt/couchdb/data
     env_file:
-     - ./env/couchdb
+      - ./env/couchdb
 
   zookeeper:
     image: bitnami/zookeeper:latest
     container_name: kos_zookeper
     env_file:
-     - ./env/zookeeper
+      - ./env/zookeeper
 
   kafka:
     image: bitnami/kafka:2.5.0
     depends_on:
       - zookeeper
     env_file:
-     - ./env/kafka
+      - ./env/kafka
 
   cmak:
     image: hlebalbau/kafka-manager:stable
@@ -38,7 +38,7 @@ services:
       - 9000:9000
     command: -Dpidfile.path=/dev/null
     env_file:
-     - ./env/cmak
+      - ./env/cmak
 
   kafka-producer:
     image: kafka-fastapi-producer
@@ -51,7 +51,7 @@ services:
     ports:
       - 8000:8000
     env_file:
-     - ./env/backend_producer
+      - ./env/backend_producer
 
   kafka-consumer:
     image: kafka-simple-consumer
@@ -106,5 +106,5 @@ services:
     depends_on:
       - spark-master
     volumes:
-        - ./spark_job/target/scala-2.12:/var/www/jobs
-        - ./lighttpd:/etc/lighttpd
+      - ./spark_job/target/scala-2.12:/var/www/jobs
+      - ./lighttpd:/etc/lighttpd
