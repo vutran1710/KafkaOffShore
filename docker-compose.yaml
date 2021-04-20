@@ -17,7 +17,7 @@ services:
 
   zookeeper:
     image: bitnami/zookeeper:latest
-    container_name: kos_zookeper
+    container_name: kos_zookeeper
     env_file:
       - ./env/zookeeper
 
@@ -27,6 +27,14 @@ services:
       - zookeeper
     env_file:
       - ./env/kafka
+
+  schema-registry:
+    image: confluentinc/cp-schema-registry:latest
+    container_name: kos_schema-registry
+    depends_on:
+      - zookeeper
+    env_file:
+      - ./env/schema_registry
 
   akhq:
     image: tchiotludo/akhq:latest
