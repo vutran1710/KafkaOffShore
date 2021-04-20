@@ -61,4 +61,4 @@ services:
     depends_on:
       - kafka-producer
     env_file:
-      - ./env/kafka_consumer
+      - ./env/worker_consumer
