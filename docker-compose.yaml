@@ -22,26 +22,25 @@ services:
       - ./env/zookeeper
 
   kafka:
-    image: bitnami/kafka:2.5.0
+    image: bitnami/kafka:latest
     depends_on:
       - zookeeper
     env_file:
       - ./env/kafka
 
-  cmak:
-    image: hlebalbau/kafka-manager:stable
-    container_name: kos_cmak
+  akhq:
+    image: tchiotludo/akhq:latest
+    container_name: kos_akhq
     depends_on:
       - zookeeper
       - kafka
     ports:
-      - 9000:9000
-    command: -Dpidfile.path=/dev/null
+      - 8080:8080
     env_file:
-      - ./env/cmak
+      - ./env/akhq
 
   kafka-producer:
-    image: kafka-fastapi-producer
+    image: kafka-backend-producer
     container_name: kos_backend-producer
     build:
       dockerfile: Dockerfile
@@ -54,8 +53,8 @@ services:
       - ./env/backend_producer
 
   kafka-consumer:
-    image: kafka-simple-consumer
-    container_name: kos_backend-consumer
+    image: kafka-worker-consumer
+    container_name: kos_worker-consumer
     build:
       dockerfile: Dockerfile
       context: ./consumer
@@ -63,48 +62,3 @@ services:
       - kafka-producer
     env_file:
       - ./env/kafka_consumer
-
-  zeppelin:
-    image: apache/zeppelin:0.9.0
-    container_name: kos_zeppelin
-    ports:
-      - 8079:8080
-    volumes:
-      - ./.persist/.tmp/logs:/logs
-      - ./.persist/zeppelin/notebook:/notebook
-      - ./.persist/zeppelin/conf:/zeppelin/conf
-      - ./.persist/zeppelin/kafka-data:/data/kafka-data
-    env_file:
-      - ./env/zeppelin
-
-  spark-master:
-    image: bitnami/spark:3
-    container_name: kos_spark-master
-    depends_on:
-      - zookeeper
-      - kafka-producer
-    ports:
-      - 8080:8080
-    env_file:
-      - ./env/spark_master
-
-  spark-worker:
-    image: bitnami/spark:3
-    depends_on:
-      - spark-master
-    ports:
-      - 8081-8082:8081
-    volumes:
-      - ./.persist/spark-worker:/opt/spark-apps
-      - ./.persist/spark-worker-data:/opt/spark-data
-    env_file:
-      - ./env/spark_worker
-
-  job_hosting:
-    image: gists/lighttpd:latest
-    container_name: job_hosting
-    depends_on:
-      - spark-master
-    volumes:
-      - ./spark_job/target/scala-2.12:/var/www/jobs
-      - ./lighttpd:/etc/lighttpd
